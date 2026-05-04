@@ -53,24 +53,39 @@ Each of the 5,000 anomalous images carries seven attributes:
 
 ## Hosting & licence
 
-- **Status:** the dataset is being prepared for separate release and is
-  **not yet publicly available**. This repository contains code only.
-- **Planned hosting:** Hugging Face Datasets (URL to be added once the
-  dataset is released).
-- **Planned licence:** Creative Commons Attribution 4.0 International
-  (CC-BY 4.0).
-- **Source images**: aggregated from publicly licensed driving datasets;
-  the full attribution list will accompany the dataset release.
+- **Where to download:** the full dataset (15,000 images + annotations,
+  packaged as `dasha-15k.tar`, ~12 GB) is hosted on Google Drive:
+
+  > **`<https://drive.google.com/open?id=18UpDBiGijAXpkRrnECPPtO0X91l0A2oW>`**
+
+- **Licence:** Creative Commons Attribution 4.0 International (CC-BY 4.0).
+- **Source images:** aggregated from publicly licensed driving datasets;
+  the full attribution list is included with the download as
+  `ATTRIBUTION.md`.
 
 ## File layout after download
+
+The Google Drive share contains a single archive `dasha-15k.tar` (~12 GB).
+After downloading, extract it into the project's `Data/` directory:
+
+```bash
+mkdir -p Data
+mv ~/Downloads/dasha-15k.tar Data/
+cd Data
+tar xf dasha-15k.tar     # creates images/ and dataset.json
+rm dasha-15k.tar         # optional: free disk space
+cd ..
+```
+
+Final on-disk layout (what all scripts in this repo assume):
 
 ```
 Data/
 ├── images/
 │   ├── data_00001.png
 │   ├── data_00002.png
-│   └── …
-└── dataset.json     # all 15,000 records keyed by image filename
+│   └── …                # 15,000 PNG files total
+└── dataset.json         # all 15,000 records keyed by image filename
 ```
 
 ## Datasheet

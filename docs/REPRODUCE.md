@@ -20,10 +20,18 @@ The repository expects to be run from the project root. All scripts use
 
 ## 1. Get the dataset
 
-The 15,000 dashcam images and annotations are being prepared for a
-**separate dataset release** (see [`docs/DATASET.md`](DATASET.md)) and are
-not included in this repository. Once the dataset is published, place it
-under `./Data/` so that the layout looks like:
+The 15,000 dashcam images and annotations are distributed **separately** as
+a single ~12 GB tarball on Google Drive (see
+[`docs/DATASET.md`](DATASET.md) for the link). After downloading
+`dasha-15k.tar`, extract it into the project's `Data/` directory:
+
+```bash
+mkdir -p Data
+mv ~/Downloads/dasha-15k.tar Data/
+cd Data && tar xf dasha-15k.tar && rm dasha-15k.tar && cd ..
+```
+
+After extraction the layout must be:
 
 ```
 Data/

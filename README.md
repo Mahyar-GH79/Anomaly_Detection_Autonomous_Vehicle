@@ -89,10 +89,11 @@ source env/bin/activate
 pip install -r requirements.txt
 
 # 2. Dataset — NOT included in this repository.
-#    The dataset is being prepared for separate release; see
-#    docs/DATASET.md for the planned format and licence.
-#    Once available, place it under ./Data/ following the layout
-#    described in docs/DATASET.md.
+#    Download the ~12 GB tarball from Google Drive (link in docs/DATASET.md)
+#    and extract:
+mkdir -p Data
+mv ~/Downloads/dasha-15k.tar Data/
+cd Data && tar xf dasha-15k.tar && rm dasha-15k.tar && cd ..
 
 # 3. Run a single binary-detection evaluation
 python eval/vlm_eval_tasks.py \
