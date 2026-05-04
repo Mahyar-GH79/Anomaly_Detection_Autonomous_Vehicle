@@ -1,0 +1,73 @@
+{
+  "n_total": 100,
+  "n_valid": 97,
+  "raw_class_agreement": 0.7938,
+  "cohens_kappa": 0.741,
+  "per_class_agreement": {
+    "animal_on_road": {
+      "n_in_gt": 9,
+      "claude_match": 8,
+      "match_rate": 0.889
+    },
+    "extreme_weather": {
+      "n_in_gt": 2,
+      "claude_match": 1,
+      "match_rate": 0.5
+    },
+    "road_surface_hazard": {
+      "n_in_gt": 1,
+      "claude_match": 0,
+      "match_rate": 0.0
+    },
+    "fallen_debris_or_vegetation": {
+      "n_in_gt": 8,
+      "claude_match": 1,
+      "match_rate": 0.125
+    },
+    "strange_object_on_road": {
+      "n_in_gt": 12,
+      "claude_match": 11,
+      "match_rate": 0.917
+    },
+    "vehicle_incident": {
+      "n_in_gt": 5,
+      "claude_match": 3,
+      "match_rate": 0.6
+    },
+    "infrastructure_failure": {
+      "n_in_gt": 2,
+      "claude_match": 2,
+      "match_rate": 1.0
+    },
+    "human_presence_anomaly": {
+      "n_in_gt": 14,
+      "claude_match": 9,
+      "match_rate": 0.643
+    },
+    "adverse_lighting": {
+      "n_in_gt": 8,
+      "claude_match": 6,
+      "match_rate": 0.75
+    },
+    "oversized_or_unusual_vehicle": {
+      "n_in_gt": 35,
+      "claude_match": 35,
+      "match_rate": 1.0
+    },
+    "multi_hazard_compound": {
+      "n_in_gt": 1,
+      "claude_match": 1,
+      "match_rate": 1.0
+    }
+  },
+  "mean_factuality": 3.33,
+  "mean_completeness": 3.052,
+  "n_agrees_with_description": 76,
+  "cost_this_run_usd": 0.6001,
+  "n_calls_this_run": 100,
+  "n_disagreements": 62,
+  "disagreements_class_only": 3,
+  "disagreements_desc_only": 42,
+  "disagreements_both": 17,
+  "disagreement_rate": 0.6392
+}

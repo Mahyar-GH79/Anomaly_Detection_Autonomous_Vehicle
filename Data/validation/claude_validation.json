@@ -1,0 +1,1893 @@
+{
+  "model": "claude-sonnet-4-6",
+  "records": [
+    {
+      "filename": "data_00003.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large dump truck is positioned in the center of the road, occupying both lanes. It is closely followed by another similar vehicle on its left, taking up additional space.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.85,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description says the dump truck is 'followed by another vehicle on its left' but the arrangement appears to be two large dump trucks side by side on a narrow road \u2014 one directly ahead and one to the left. The description also doesn't mention the construction zone context (5 km/h speed limit sign reading '\u524d\u65b9\u65bd\u5de5 \u51cf\u901f\u6162\u884c' meaning 'construction ahead, slow down'), the rocky debris on the roadside, or the dusty/degraded road surface conditions."
+      },
+      "usage": {
+        "input_tokens": 1174,
+        "output_tokens": 178,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00005.png",
+      "gt_class": "vehicle_incident",
+      "gt_description": "A silver sedan is driving the wrong way on a highway ramp, heading towards oncoming traffic. The vehicle is located in the lower center-right of the frame, with oncoming vehicles visible in adjacent lanes.",
+      "claude_response": {
+        "your_class": "vehicle_incident",
+        "class_confidence": 0.85,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The silver sedan is in the lower center (not center-right) of the frame. The description correctly identifies the wrong-way driving scenario but misses the prominent 'WRONG WAY' sign with red flashing lights on the left side, which is a key visual element. The vehicle appears to be on the highway itself rather than a ramp."
+      },
+      "usage": {
+        "input_tokens": 1518,
+        "output_tokens": 142,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00007.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A person wearing a bright orange outfit is stopped on a scooter in the crosswalk at an intersection, to the right of the lane. The scooter is stationary while the traffic signal for vehicles is red.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.45,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description focuses on a person in orange on a scooter in the crosswalk, which is partially visible and somewhat accurate. However, the primary anomaly is debatable - the scene shows normal urban intersection traffic. The large van dominates the frame and is the most prominent vehicle. The person in orange appears to be a cyclist/scooter rider near the crosswalk area, but this is not clearly an anomaly. The description is partially accurate but overstates the anomalous nature of the scene and doesn't mention the dominant van. No clear single strong anomaly is present; the image appears mostly normal urban traffic."
+      },
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 208,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00009.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "The scene is very dark, with minimal illumination affecting visibility throughout the frame. Two parked vehicles are visible on the right side of a dimly lit road.",
+      "claude_response": {
+        "_parse_error": "Expecting value: line 1 column 1 (char 0)",
+        "_raw": "Looking at the image, I can see a very dark nighttime scene. There appear to be vehicles on the road, and one of them (the white/silver car) appears to be positioned at an odd angle - it looks like it may have been involved in an incident or is stopped in an unusual position on the road. The scene shows what appears to be a vehicle incident on a dark road with near-total darkness creating severe visibility challenges.\n\nThe description says \"two parked vehicles on the right side\" but the positioning of the white car appears more consistent with an accident/incident rather than normal parking - it seems angled/askew. Additionally, the extreme darkness itself is a notable hazard.\n\nThere are potentially two anomalies: a vehicle incident and adverse lighting conditions.\n\n```json\n{\n  \"your_class\": \"vehicle_incident\",\n  \"class_confidence\": 0.62,\n  \"description_factuality\": 2,\n  \"description_completeness\": 2,\n  \"agrees_with_description\": false,\n  \"issues\": \"The description treats the vehicles as merely 'parked' but the white car appears angled/askew suggesting an incident or collision. The description also fails to note the anomalous positioning of the vehicle that constitutes the primary hazard. The extreme darkness is noted but not flagged as an anomaly.\"\n}\n```"
+      },
+      "usage": {
+        "input_tokens": 1172,
+        "output_tokens": 300,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00010.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized cement mixer truck is in the left lane of a multi-lane road, taking up most of the lane space. The truck's large mixing drum and rear chute extend backward, creating a significant presence in the lane.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The cement mixer truck is visible in the left lane. However, the description says 'rear chute extends backward' - the image shows the rear/discharge end of the mixer but a prominent chute is not clearly visible. Also, a crane is visible behind/alongside the truck which is not mentioned. The truck appears to be traveling in the same direction as the ego vehicle, not blocking oncoming lanes."
+      },
+      "usage": {
+        "input_tokens": 1186,
+        "output_tokens": 163,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00013.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large yellow crane truck occupies the right lane in an urban area. Its size and position dominate the lane, with surrounding traffic in close proximity.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate but misses the second large construction vehicle (carrying heavy equipment) visible in the left lane ahead. There are actually two oversized/unusual vehicles present, not just one crane truck."
+      },
+      "usage": {
+        "input_tokens": 1170,
+        "output_tokens": 115,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00016.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "Multiple pedestrians are crossing the intersection at night, occupying several lanes of the crosswalk. They are visible under streetlights, wearing various dark and light clothing.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.62,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description misses a notable element: there appears to be a dog (animal) being walked by one of the pedestrians crossing the road, visible in the center of the frame. Additionally, the pedestrians appear to be crossing mid-intersection rather than strictly on a crosswalk. The description is broadly accurate about pedestrians crossing at night but omits the animal presence which is the primary anomaly, and the scene is a normal urban crosswalk situation with pedestrians (not a highway), so human_presence_anomaly doesn't apply well either. The dog appears to be on the road, making animal_on_road the closest classification."
+      },
+      "usage": {
+        "input_tokens": 1174,
+        "output_tokens": 204,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00019.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized vehicle with large, complex machinery is stationary in the center lane of a multi-lane road. The vehicle has exposed equipment and machinery parts on its rear end, extending the height and width beyond typical vehicle dimensions.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The vehicle is a cement mixer truck (clearly identifiable by the rotating drum), not just 'large complex machinery'. Also, the vehicle appears to be moving, not stationary. The description is vague and misses the specific identification of it as a concrete mixer."
+      },
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 129,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00023.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized concrete mixer truck occupies the right lane of a multi-lane road, with a large rotating drum visible at the rear. The truck features high visibility markings and a distinctive pouring chute at the back.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The truck appears to be in a left/center lane rather than the right lane. The description of the drum and high-visibility markings is accurate. The 'pouring chute' description is reasonable for the funnel/hopper structure visible at the rear."
+      },
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 129,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00025.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "Several pedestrians are walking and standing in the middle of a narrow street between parked vehicles and storefronts, potentially obstructing traffic flow.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.62,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is largely accurate. The street appears to be a narrow commercial/market street in China with pedestrians walking among vehicles, bicycles, and storefronts. The anomaly is mild \u2014 this looks more like a busy mixed-use street than a truly dangerous pedestrian intrusion scenario. The description correctly identifies pedestrians obstructing traffic flow but slightly overstates the hazard level."
+      },
+      "usage": {
+        "input_tokens": 1142,
+        "output_tokens": 154,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00035.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large construction vehicle occupies the right lane of a two-lane road, taking up a significant portion of the roadway. The vehicle has a yellow and black color scheme with red reflective tape.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description calls it a 'two-lane road' but the road appears to be a single carriageway with oncoming traffic visible on the left side. The vehicle is an XCMG crane/construction vehicle, not just generically described. The description misses the motorcycles and tricycle carrying cargo on the left side, which add context to the road congestion. The color scheme description is partially correct but the vehicle is primarily yellow/orange with gray/dark lower body, not simply 'yellow and black'."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 183,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00036.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "A dog stands on the road near the center of the frame, appearing to move from left to right. The dog is small and light-colored, with no leash visible.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The dog appears to be medium-sized rather than small, and its coloring appears brownish/tan rather than clearly 'light-colored'. The direction of movement is uncertain from a still image. Overall the description correctly identifies the key anomaly."
+      },
+      "usage": {
+        "input_tokens": 1175,
+        "output_tokens": 122,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00037.png",
+      "gt_class": "vehicle_incident",
+      "gt_description": "A silver sedan travels in the wrong direction in the center lane of a multi-lane highway. The vehicle is facing towards oncoming traffic amidst normal traffic flow.",
+      "claude_response": {
+        "your_class": "vehicle_incident",
+        "class_confidence": 0.82,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate - a silver Mercedes sedan is indeed facing the wrong direction (towards the ego vehicle/camera) in what appears to be a multi-lane highway with normal traffic flow around it. Minor issue: it's difficult to be 100% certain it's in the 'center lane' specifically, and there's a vehicle with red/emergency lights visible behind the wrong-way car that isn't mentioned."
+      },
+      "usage": {
+        "input_tokens": 1509,
+        "output_tokens": 155,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00043.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "Several pedestrians are walking and standing on a two-lane tree-lined street. They are dispersed across the road, with some near the center and others closer to the buildings on both sides.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.82,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description accurately captures pedestrians on the road but doesn't explicitly flag this as anomalous \u2014 pedestrians walking in the vehicle travel lanes of a street is the primary hazard. The description is factually accurate but treats the scene as normal rather than identifying the anomaly."
+      },
+      "usage": {
+        "input_tokens": 1151,
+        "output_tokens": 128,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00048.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "An unusual, homemade vehicle occupies the right lane of a city street, obstructing the path of following vehicles. It has a rusted metal frame and a cover on top.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.82,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate - the vehicle does appear unusual/makeshift with a rusted frame and cover. However, it misses the pedestrian visible on the right side of the image and the nighttime lighting context with some lens flare."
+      },
+      "usage": {
+        "input_tokens": 1178,
+        "output_tokens": 123,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00051.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer is centered in the right lane of a multi-lane road. It has a substantial presence due to its size, extending beyond its lane.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The cement mixer appears to be in the left/center lane rather than the right lane. The claim that it extends beyond its lane is not clearly supported by the image. Otherwise the description correctly identifies the main anomaly."
+      },
+      "usage": {
+        "input_tokens": 1171,
+        "output_tokens": 118,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00056.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A white bicycle frame lies in the center of the road in a wooded area. The frame appears to be detached with no wheels or additional components.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.85,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The object appears to be a bicycle frame/part lying on the road, but calling it a 'white bicycle frame' is somewhat inaccurate - it looks more like handlebars or a small bicycle component rather than a full frame. The description of it being detached with no wheels is partially correct but oversimplifies what's visible."
+      },
+      "usage": {
+        "input_tokens": 1170,
+        "output_tokens": 145,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00059.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large green industrial vehicle is stationary in the right lane of a multi-lane roadway, occupying the full width of the lane. Its bright color and size stand out against the urban backdrop.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The vehicle appears to be moving (not stationary) on an elevated highway/bridge, not a multi-lane roadway. The description correctly identifies it as a large green industrial vehicle (appears to be a concrete mixer truck) but incorrectly states it is stationary."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 130,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00060.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Several pieces of metal debris are scattered across the left and center lanes of a multi-lane highway. The debris consists of long, dark metal beams extending across the lanes, creating a major obstruction.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The description mentions only the debris on the road but completely omits the large semi-truck (Volvo) approaching in the opposite/same lane, which is a major visible hazard. The debris appears to be wooden/metal planks or beams, likely fallen from the truck. The scene is a compound hazard: fallen cargo debris blocking lanes AND a large truck involved. Calling it purely 'metal beams' is somewhat inaccurate as the material looks more like wooden planks or mixed lumber."
+      },
+      "usage": {
+        "input_tokens": 1516,
+        "output_tokens": 179,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00061.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "Street lighting glare and reflections on a wet road surface are present throughout the scene, creating adverse lighting conditions. The area appears dimly lit except for the bright spot created by the streetlight.",
+      "claude_response": {
+        "your_class": "adverse_lighting",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description mentions wet road reflections, but it's unclear if the road is truly wet or if the bokeh/lens artifacts (visible as circular light spots) are from rain on the windshield. The primary anomaly is the near-total darkness with poor visibility, which the description captures only partially. Also, a large white vehicle/truck is visible on the right side that goes unmentioned."
+      },
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 152,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00065.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement truck occupies the center-left lane of a multi-lane city road, with its mixer section elevated. The truck's size and structure partially block the adjacent lane.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description says the mixer section is 'elevated' which is somewhat inaccurate \u2014 the drum is in its normal transport position, not elevated. Also, the truck occupies the ego vehicle's lane directly ahead rather than a 'center-left lane.' Otherwise the core identification of a large cement mixer truck is correct."
+      },
+      "usage": {
+        "input_tokens": 1176,
+        "output_tokens": 141,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00070.png",
+      "gt_class": "vehicle_incident",
+      "gt_description": "A white vehicle is driving in the wrong direction on the left side of a divided highway, approaching oncoming traffic. The vehicle is positioned in the rightward lane heading towards the vehicles traveling correctly on the road.",
+      "claude_response": {
+        "your_class": "infrastructure_failure",
+        "class_confidence": 0.45,
+        "description_factuality": 2,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The image shows a road with construction barriers/traffic cones dividing lanes, with vehicles appearing to travel normally. There is no clear evidence of a wrong-way driver. The white vehicle appears to be in a construction zone with temporary barriers, not driving against traffic. The description fabricates a wrong-way driving scenario that is not clearly supported by the image. The primary anomaly appears to be a construction zone with barriers on the road rather than a vehicle incident."
+      },
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 168,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00071.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Numerous large boulders are scattered across both lanes of the road in the center of the frame, blocking any traffic. The rocks vary in size, with some being large enough to obstruct a single lane entirely. Dust is visible around the rocks, indicating a recent fall.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The description captures the rockslide/boulders accurately but completely omits the emergency response vehicles (white van and red vehicle with flashing lights) and the multiple workers in high-visibility vests on the road \u2014 which are major visible elements. The description also understates the scale: rocks are covering most of the road surface, not just a single lane. Additionally, the scene includes human presence on the road (workers), emergency vehicles, and adverse weather/fog, making it a compound hazard, not just a road surface hazard."
+      },
+      "usage": {
+        "input_tokens": 1532,
+        "output_tokens": 183,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00072.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large concrete mixer truck is positioned in the center of the lane, occupying a significant portion of the road. The truck is illuminated by rear lights and is surrounded by nighttime street lighting.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate but misses the prominent construction warning lights/signals visible on the right side of the frame, which suggest an active construction zone. The truck appears to be in the right lane rather than the center of the lane."
+      },
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 121,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00075.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large construction vehicle is in the right lane of a multi-lane highway, occupying the full width of the lane. The vehicle has a distinctive green color and an extended section on its top.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate. The vehicle is a large mobile crane (Zoomlion brand), green and gray colored, on the highway. Minor inaccuracy: it appears to be in the left/center-right lane area rather than clearly the rightmost lane. The description omits the crane boom/arm details and the red-white safety markings visible on the vehicle."
+      },
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 152,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00081.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "Several cows are walking on a two-lane rural road, primarily positioned in the center of the roadway. The cows are brown and white, occupying both lanes and moving towards the camera.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.99,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The cows are brown and white and on the road. However, 'occupying both lanes' is slightly overstated \u2014 most cows appear to be in the center/right lane area. Also, some cows in the background appear to be on the roadside/grass, not strictly on the road. Minor inaccuracies only."
+      },
+      "usage": {
+        "input_tokens": 1124,
+        "output_tokens": 150,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00083.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large yellow crane is positioned on the right side of the road, extending partially into the right lane. The crane is brightly lit and its leg is extended, potentially obstructing traffic flow.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.88,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The crane does appear to be partially obstructing the lane with its outrigger/stabilizer leg extended, which is accurately described. The description is mostly accurate but slightly overstates the lighting ('brightly lit') \u2014 the crane is visible but the scene is quite dark overall. Minor point: it could also be classified as a multi-hazard due to road barriers/construction zone setup, but the primary anomaly is the crane."
+      },
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 164,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00086.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized vehicle is situated on the right side of the road, occupying part of the traffic lane. The vehicle appears larger than typical vehicles and has a significant rear structure extending from its cabin.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is roughly accurate - there is a large tanker/cement truck visible on the road. However, the vehicle is not strictly on the 'right side' only; it appears to be traveling in the road ahead. The description's characterization of a 'significant rear structure extending from its cabin' is a reasonable description of a tanker truck. Minor inaccuracies in positional details."
+      },
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 158,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00094.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "Two large tires are rolling across the snowy roadway from right to left, crossing in front of a parked car and near a moving truck. The tires are in motion, creating a potential hazard for other vehicles.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description says 'two large tires' but the image shows what appears to be one large tire clearly visible in the center lane and possibly one near the right side vehicles. Direction of travel is somewhat ambiguous. The cars on the right are not clearly 'parked' - they appear to be moving or stopped traffic. Otherwise the description captures the core hazard accurately."
+      },
+      "usage": {
+        "input_tokens": 1186,
+        "output_tokens": 150,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00096.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized cement mixer is positioned in the center lane near an intersection, with its mixing drum and chute extending close to the pedestrian walkway. It is visually larger than surrounding vehicles.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The truck appears to be a flatbed carrying construction equipment/machinery (possibly cement mixers or rollers), not a single cement mixer truck with a rotating drum. The description's detail about the chute 'extending close to the pedestrian walkway' is somewhat speculative. Otherwise accurate about the oversized vehicle at an intersection."
+      },
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 142,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00101.png",
+      "gt_class": "vehicle_incident",
+      "gt_description": "An overturned truck is present on the right shoulder of a multi-lane road at night. The truck is tilted with its wheels off the ground, leaning against the guardrail. A red sedan is driving ahead in the center lane.",
+      "claude_response": {
+        "_parse_error": "Expecting value: line 1 column 1 (char 0)",
+        "_raw": "Looking at the image carefully:\n\n- It's a nighttime driving scene\n- There's a large vehicle (appears to be a construction/dump truck or similar heavy vehicle) on the right side\n- There's a red car ahead in the lane\n- Street lights are creating glare/flare effects\n- The large vehicle on the right appears to be a construction or dump truck - it's not clearly overturned but is a large/unusual vehicle presence\n\nThe description claims an \"overturned truck\" - looking at the image, there does appear to be a large truck on the right side, but it's difficult to confirm it's overturned. It looks more like a large construction/dump vehicle that's simply present. The description of it being \"tilted with its wheels off the ground\" seems to be an overinterpretation of what's visible.\n\nThe primary anomaly is either an oversized/unusual vehicle or potentially a vehicle incident if the truck is indeed overturned.\n\n```json\n{\n  \"your_class\": \"oversized_or_unusual_vehicle\",\n  \"class_confidence\": 0.55,\n  \"description_factuality\": 2,\n  \"description_completeness\": 3,\n  \"agrees_with_description\": false,\n  \"issues\": \"The large vehicle on the right appears to be a construction/dump truck but there is no clear evidence it is overturned or tilted with wheels off the ground. The description fabricates specific details about the truck being overturned that are not clearly visible. The red car ahead is correctly identified.\"\n}\n```"
+      },
+      "usage": {
+        "input_tokens": 1190,
+        "output_tokens": 349,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00102.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A construction worker is crouching on the right side of the road near the sidewalk, working on a section of the pavement. The area is dimly lit with construction barriers, cones, and machinery nearby.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.62,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is roughly accurate but misses that there is also construction machinery/equipment on the left side of the road, which partially blocks the lane. The scene involves active road construction with workers on the road surface at night, which is the primary hazard. The description captures the worker and construction elements but underemphasizes the road obstruction from the large machinery on the left."
+      },
+      "usage": {
+        "input_tokens": 1184,
+        "output_tokens": 149,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00104.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Several items of debris are scattered across the right side of the road, near the right lane and shoulder. They appear dark and irregularly shaped, likely posing a hazard to vehicles traveling on this side of the road.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.72,
+        "description_factuality": 2,
+        "description_completeness": 1,
+        "agrees_with_description": false,
+        "issues": "The primary anomaly is a large blue flatbed/cargo truck stopped or moving across the road ahead, with what appear to be traffic cones around it. The description focuses on debris on the right side of the road, missing the main hazard entirely. There are some dark objects on the road near the right curb, but the dominant anomaly is the large truck blocking/crossing the road."
+      },
+      "usage": {
+        "input_tokens": 1184,
+        "output_tokens": 155,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00105.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "A herd of sheep occupies the full width of a rural road, blocking passage completely. The sheep are densely packed and extend across both lanes of the road.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.99,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The road appears to be a single-lane or narrow two-lane rural road rather than clearly 'two lanes.' The sheep do occupy the full width and block passage, which is correct. The description slightly overstates the road width but otherwise captures the scene well."
+      },
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 132,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00106.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large construction vehicle is situated near the center-right of the road, blocking part of the lane alongside another vehicle. It is stationary with no apparent signals or alerts.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The construction vehicle (yellow wheel loader/front-end loader) is positioned near the road but appears to be at the edge near green construction barriers, not clearly blocking the center of the lane. The description somewhat overstates the lane-blocking nature. The vehicle does not appear stationary \u2014 it may be operating near the construction zone. The green construction barriers along the roadside are a notable element not mentioned."
+      },
+      "usage": {
+        "input_tokens": 1314,
+        "output_tokens": 157,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00107.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "Large spools of cable are positioned on the right side of a road. They are varied in size and mostly kept off the driving lane, leaning against a wall.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description says spools are on the 'right side' but they appear to be on the left side relative to the taxi. Also, one large spool appears to have fallen/tipped over onto the road surface, which is the main hazard the description downplays by saying they are 'mostly kept off the driving lane.' The description also misses the taxi vehicle prominently in the scene."
+      },
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 157,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00109.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "Two police officers stand on the road at an intersection, directing traffic around a closed segment marked by cones and a barrier. One officer is near the center-right directing traffic, while another is to the right near a booth.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description mentions 'two police officers' but only one officer is clearly visible walking on the road; another person appears near the right side but is less clearly an officer. The description says one officer is 'near the center-right directing traffic' but the visible officer appears to be walking rather than actively directing. The description is broadly accurate about the checkpoint/roadblock setup with cones and a barrier. The booth is correctly noted."
+      },
+      "usage": {
+        "input_tokens": 1157,
+        "output_tokens": 161,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00111.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "Bright headlights from oncoming vehicles are visible slightly to the right of center frame, causing glare and reduced visibility on a two-lane road at night.",
+      "claude_response": {
+        "your_class": "adverse_lighting",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is roughly accurate but misses the large truck/vehicle on the left side of frame, and the road appears to be a wider highway rather than a two-lane road. The glare and reduced visibility aspect is correctly identified. The image shows near-total darkness with limited visibility making it an adverse lighting situation, though the description captures the main elements."
+      },
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 142,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00113.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An excavator and a van are parked on the right side of the road at night, reducing the available space for vehicles to pass safely. The excavator's arm extends partially onto the sidewalk.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate \u2014 an excavator and a van/bus are visible on the right side at night. However, claiming the excavator arm 'extends partially onto the sidewalk' is speculative and not clearly verifiable from the image. The vehicle behind may be a bus rather than a van. The description doesn't mention that the excavator appears to be partially on or very close to the road itself, which is the primary hazard."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 166,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00118.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A motorcycle with a rider is traveling on the sidewalk on the right side of the frame, near several pedestrians. The motorcycle is positioned close to the curb with its lights on, creating an unusual presence on the pedestrian walkway.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.6,
+        "description_factuality": 2,
+        "description_completeness": 1,
+        "agrees_with_description": false,
+        "issues": "The primary anomaly is a large dump truck occupying the road directly ahead of the ego vehicle, alongside a large bus on the left. The description focuses on a motorcycle on the sidewalk as the main anomaly, which is a minor secondary detail at best. The description completely misses the dominant hazard \u2014 the oversized dump truck blocking the lane."
+      },
+      "usage": {
+        "input_tokens": 1188,
+        "output_tokens": 146,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00120.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "The scene is poorly lit, making it difficult to differentiate objects clearly. Multiple vehicles are parked on the grass to the right of the road, visible only by their reflective surfaces.",
+      "claude_response": {
+        "your_class": "adverse_lighting",
+        "class_confidence": 0.45,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description focuses on parked vehicles on grass, but the image appears to show vehicles on or near the road at night with very poor visibility. There may be an animal (cow/livestock) visible near the vehicles, suggesting a possible animal_on_road or multi-hazard scenario. The extreme darkness is the dominant challenge. Describing vehicles as 'parked on grass' may be inaccurate \u2014 they appear to be on the roadside/road. The possible animal presence is entirely missed."
+      },
+      "usage": {
+        "input_tokens": 1177,
+        "output_tokens": 178,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00121.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "Two cows stand in the center of the road on a curved, mountainous roadway. One cow is closer to the yellow line and the other is near its side, both obstructing traffic flow.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.99,
+        "description_factuality": 3,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description mentions a 'yellow line' but the road markings appear to be white dashed lines, not yellow. Also, the two animals appear to be a cow and a calf (not two adult cows). Otherwise the description accurately captures the main anomaly."
+      },
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 127,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00123.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "Pedestrians are present on the right side of the road alongside parked and moving vehicles in a dimly lit area. The scene includes a person standing near the sidewalk close to the moving lane.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.62,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description captures the pedestrian presence and dim lighting but misses the prominent red-lit vehicle (possibly emergency/fire truck) in the center of the scene which is a key element. The description is somewhat generic and understates the chaotic nighttime scene with multiple people in the road area."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 132,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00125.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A black tire and a wooden plank lie on the road in the center of the frame. The tire is positioned slightly to the left and the wooden plank slightly to the right, leaving space in between them on the road surface.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate. The wooden plank appears more like a wooden board/stick rather than a full plank, but the overall description of the tire and wooden object on the road surface is correct. The spatial positioning described is accurate."
+      },
+      "usage": {
+        "input_tokens": 1130,
+        "output_tokens": 121,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00127.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large green cement mixer truck is present in the right lane of a multi-lane road. The vehicle has an unusual shape due to its attached equipment.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate. The truck appears to be in the right lane as stated. However, it's unclear if it's specifically a cement mixer - it could be another type of construction vehicle. The description misses the construction site context visible in the background (cranes, buildings under construction)."
+      },
+      "usage": {
+        "input_tokens": 1170,
+        "output_tokens": 134,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00130.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "Two construction workers are present on the right shoulder of a multi-lane highway, near a stationary maintenance vehicle. The workers wear orange high-visibility clothing and are accompanied by traffic cones placed on the road.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.72,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate - workers in high-vis clothing, maintenance vehicle, and traffic cones are visible. However, the workers appear to be on the road/shoulder area of a highway which is the anomaly. The description doesn't mention the yellow warning sign or the truck further ahead. The maintenance vehicle appears to be a specialized construction/utility vehicle (boom/crane type), which could also qualify as an oversized/unusual vehicle, but the primary anomaly is workers on highway."
+      },
+      "usage": {
+        "input_tokens": 1182,
+        "output_tokens": 171,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00136.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized utility vehicle travels in the left lane near the center of the frame under low-light conditions. The vehicle has bright lights and equipment on the back, standing taller than the surrounding cars.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.85,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The oversized vehicle (appears to be a crane or heavy construction truck) is in the center/right portion of the frame, not clearly the 'left lane.' The description says 'bright lights' on the back but the vehicle shows red taillights and equipment silhouette. The description is roughly accurate but misidentifies lane position and oversimplifies the vehicle type."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 153,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00137.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "A large herd of brown and white cattle occupies the full width of a two-lane highway, blocking both directions of traffic. The cattle are densely packed across the road, with vehicles halted on both sides.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.72,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description accurately captures the cattle herd blocking the highway and halted vehicles, but misses two notable additional elements: a person/herder standing on the right side of the road guiding the cattle, and a large white truck/vehicle behind the herd. These additional elements, particularly the human presence on the road alongside the animal hazard, suggest a multi-hazard compound classification rather than simple animal_on_road. The description also says 'both directions of traffic' but traffic appears mainly on the left side."
+      },
+      "usage": {
+        "input_tokens": 1520,
+        "output_tokens": 180,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00138.png",
+      "gt_class": "infrastructure_failure",
+      "gt_description": "A leaning traffic light pole is positioned diagonally across multiple lanes in the center of a busy urban intersection. The pole appears to be dislodged from its base and hangs precariously, obstructing the passage of vehicles.",
+      "claude_response": {
+        "your_class": "infrastructure_failure",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate \u2014 a traffic light pole is visibly leaning/fallen diagonally across the intersection. However, it slightly overstates the obstruction (the pole doesn't clearly block all lanes) and misses the traffic personnel in high-vis vests managing the scene, which is a notable visible element."
+      },
+      "usage": {
+        "input_tokens": 1525,
+        "output_tokens": 135,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00140.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "Bright headlights from an oncoming vehicle in the left lane create significant glare, affecting visibility. The street is lined with parked vehicles and commercial buildings with illuminated signs.",
+      "claude_response": {
+        "your_class": "adverse_lighting",
+        "class_confidence": 0.6,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The glare is present but not severely blinding - it's more of a normal night driving scene with some headlight flare. The description slightly overstates the severity of visibility impairment. The scene details about parked vehicles and commercial buildings are accurate."
+      },
+      "usage": {
+        "input_tokens": 1177,
+        "output_tokens": 123,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00141.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Two fallen traffic cones lie in the center of the right lane on a straight road. They are knocked over, with one partly squashed, and their presence partially obstructs the lane.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description mentions 'two fallen traffic cones' but the image shows what appears to be a fallen/deflated object (possibly a cone or banner) alongside one upright cone. The object on the left looks more like a fallen banner or bag rather than a traffic cone. The description is roughly accurate but misidentifies the nature of the objects."
+      },
+      "usage": {
+        "input_tokens": 1178,
+        "output_tokens": 145,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00146.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "A large tree lies across the left lane of a multi-lane road, extending partially into the adjacent lane. The tree trunk is substantial, with green leaves and branches protruding outward, forming a significant obstacle.",
+      "claude_response": {
+        "your_class": "fallen_debris_or_vegetation",
+        "class_confidence": 0.98,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate but misses the approaching pickup truck with headlights on, which is a significant element showing the immediate danger. The tree appears to span the left lane and extend toward the center/right lane rather than 'partially into the adjacent lane' \u2014 it actually covers a large portion of the road."
+      },
+      "usage": {
+        "input_tokens": 1519,
+        "output_tokens": 137,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00150.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer occupies the center lane of a multi-lane urban road. The truck is visually prominent due to its size, with a mixer drum extending from the vehicle's rear. Several warning signs are visible on the back of the truck.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate. The mixer drum appears to extend from the rear/top of the truck correctly. However, the description omits the construction context visible (cranes, construction site on right), and the truck appears to be in the right lane rather than strictly the center lane. Minor inaccuracies only."
+      },
+      "usage": {
+        "input_tokens": 1330,
+        "output_tokens": 139,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00152.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A person is riding a motorcycle on the right shoulder of the road. The motorcycle and rider are located near the right side of the frame, and they are close to the blue barrier separating the road from the adjacent area.",
+      "claude_response": {
+        "your_class": "extreme_weather",
+        "class_confidence": 0.55,
+        "description_factuality": 3,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The description focuses on the motorcycle rider but misses the more prominent anomaly: heavy smog/haze reducing visibility significantly along the road. The rider appears to be on a scooter/electric bike rather than a motorcycle, and they are on the road edge near a blue construction barrier. The description is partially accurate about the rider's position but completely omits the severe air pollution/smog condition that is the primary visual anomaly."
+      },
+      "usage": {
+        "input_tokens": 1184,
+        "output_tokens": 164,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00153.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "Three X-shaped wooden barricades are placed on a narrow roadway, blocking passage. They are evenly spaced and occupy the full width of the path.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.88,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The objects appear to be metal (steel/iron) anti-tank or anti-vehicle caltrops/hedgehogs rather than wooden barricades, but the general description of X-shaped blocking structures is accurate. They don't fully occupy the entire width \u2014 there are gaps on the sides."
+      },
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 134,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00159.png",
+      "gt_class": "extreme_weather",
+      "gt_description": "A large semi-truck is partially submerged in floodwater that covers the entire road, creating strong waves. The road markings are barely visible due to the water.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.88,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description focuses only on the semi-truck and flooding, but misses that there appears to be a second smaller vehicle (possibly a car) being swept away by the floodwaters near the truck. The truck doesn't appear 'partially submerged' \u2014 its wheels are in floodwater but the cab is above water. The scene is a compound hazard: active flooding making the road impassable PLUS an oversized vehicle in distress PLUS what appears to be another vehicle incident. Road markings ARE visible (yellow center lines), contradicting 'barely visible.'"
+      },
+      "usage": {
+        "input_tokens": 1511,
+        "output_tokens": 194,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00161.png",
+      "gt_class": "multi_hazard_compound",
+      "gt_description": "An overturned truck is on the right shoulder of a highway under a heavy dust storm. The dust obscures visibility, and the truck leans precariously at an angle.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.88,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description identifies the truck as 'overturned' but it appears to be leaning/tipping rather than fully overturned. More critically, the description misses the compound nature of the hazard: there is both an extreme dust storm (making the road nearly invisible with orange-brown dust reducing visibility severely) AND a vehicle incident (the large truck in distress on the right). The primary classification should be multi_hazard_compound combining extreme weather (dust storm) and vehicle incident. The description focuses only on the truck and treats the dust storm as secondary context rather than a co-equal primary hazard."
+      },
+      "usage": {
+        "input_tokens": 1512,
+        "output_tokens": 200,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00162.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A person is walking in the right lane of a multi-lane highway at night. The individual is dressed in dark clothing, blending with the low-light environment.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.97,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The person appears to be walking on the shoulder/right edge of the road rather than clearly in the right lane itself, but the description is mostly accurate. The description misses the dramatic shadow cast by the headlights and the multi-lane divided highway context with oncoming traffic visible."
+      },
+      "usage": {
+        "input_tokens": 1509,
+        "output_tokens": 130,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00166.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Fallen branches are scattered across the left lane of a two-lane road. The debris is mostly concentrated near the roadside, consisting of medium-sized branches and leaves.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 1,
+        "description_completeness": 1,
+        "agrees_with_description": false,
+        "issues": "The description claims fallen branches scattered across the left lane, but the image shows large concrete barriers/blocks placed in the road near an intersection, along with a person standing on the sidewalk. There are no visible fallen branches or debris."
+      },
+      "usage": {
+        "input_tokens": 1174,
+        "output_tokens": 120,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00168.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "Two large construction vehicles are situated in the center lane of a multi-lane roadway. They occupy much of the lane\u2019s width, presenting an obstruction to normal traffic flow.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.9,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description says the construction vehicles are 'situated in the center lane' as if stationary, but they appear to be loaded on a flatbed transport truck and moving. There are also traffic cones visible on the left side of the road which the description omits. The vehicles are forklifts/construction equipment being transported, not driving independently."
+      },
+      "usage": {
+        "input_tokens": 1175,
+        "output_tokens": 146,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00170.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A white round object and a brown box are positioned on the street, slightly off the center of the road. The white object appears to be circular and relatively flat, while the brown box is rectangular.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.82,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description accurately identifies the white round object and brown box on the road. However, it misses the trash/recycling bin (dumpster) that is also near/on the road area, and doesn't mention the pedestrian visible on the left side."
+      },
+      "usage": {
+        "input_tokens": 1123,
+        "output_tokens": 126,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00173.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer truck travels in the center of the frame on a two-lane road, occupying the full width of the lane. The truck is seen from the rear, with visible details of its drum and rear lights.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.88,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate - cement mixer truck visible from rear with drum and tail lights. Minor inaccuracy: the truck appears to be in its lane rather than 'center of the frame' in an anomalous way. Description omits the dusk/low-light conditions and wet windshield visible in the image."
+      },
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 141,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00180.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "Two bicycles are positioned on the sidewalk adjacent to the road on the right side of the frame. They appear stationary and unattended.",
+      "claude_response": {
+        "_parse_error": "Expecting value: line 1 column 1 (char 0)",
+        "_raw": "Looking at the image, I need to identify the primary anomaly and evaluate the description.\n\nThe image shows a street scene with a utility/lighting pole that appears to have fallen or is leaning significantly against a tree and wall on the right side. This looks like a fallen or damaged infrastructure element - specifically what appears to be a blue utility pole leaning at an angle against the tree.\n\nThe candidate description focuses only on the bicycles on the sidewalk, completely missing the apparent infrastructure anomaly (the leaning/fallen pole).\n\n```json\n{\n  \"your_class\": \"infrastructure_failure\",\n  \"class_confidence\": 0.62,\n  \"description_factuality\": 3,\n  \"description_completeness\": 1,\n  \"agrees_with_description\": false,\n  \"issues\": \"The description only mentions bicycles on the sidewalk and completely ignores the primary anomaly \u2014 a blue utility/lighting pole that appears to have fallen or is leaning heavily against a tree and wall. The bicycles are present but are not the anomaly.\"\n}\n```"
+      },
+      "usage": {
+        "input_tokens": 1169,
+        "output_tokens": 237,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00181.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A green plastic jerry can is positioned on the pavement in the lower center of the frame. It appears unused and upright, with a handle on top.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.85,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description accurately identifies the green plastic container on the pavement. However, it's a small container/canister rather than a full-sized jerry can. The description captures the main anomaly but doesn't mention the residential street context or the paved brick road surface."
+      },
+      "usage": {
+        "input_tokens": 1171,
+        "output_tokens": 128,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00185.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "Several cows are spread across the width of a two-lane rural road, moving slowly in the direction of the camera. The cows have black and white markings and are scattered, obstructing both lanes.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.99,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description says cows have 'black and white markings' but many cows in the image are brown/reddish-brown (not just black and white). Also misses the sunset lighting condition and the oncoming car visible in the background. The description is roughly accurate but oversimplifies the coloring of the herd."
+      },
+      "usage": {
+        "input_tokens": 1519,
+        "output_tokens": 142,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00186.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer truck is positioned in the center of the frame on a multi-lane road, occupying the full width of its lane. The truck is stationary with a long chute extending downward. Surrounding vehicles appear to be traveling closely behind it.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description calls it a 'cement mixer truck' but it appears to be more of a concrete pump/hopper truck rather than a rotating drum mixer. The truck does not appear stationary \u2014 traffic is moving. The chute description is roughly accurate but imprecise. Background construction context (cranes, buildings under construction) is not mentioned."
+      },
+      "usage": {
+        "input_tokens": 1193,
+        "output_tokens": 145,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00189.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A green plastic crate is situated in the center of the frame, near the intersection, partially obstructing the road. A person is standing nearby, possibly related to the crate.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 2,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The description focuses on a green plastic crate near the intersection, but there are also dark/black objects scattered on the road surface in the foreground (closer to the ego vehicle), which appear to be debris or fallen items. The description misses the larger truck (Spedition Flamm) blocking the intersection and the multiple objects on the road. The crate description is partially accurate but incomplete, and calling it 'green' may be inaccurate \u2014 it appears dark/black. The primary anomaly is multiple objects strewn across the road near an intersection with a large truck blocking it."
+      },
+      "usage": {
+        "input_tokens": 1121,
+        "output_tokens": 199,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00197.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A person accompanied by a dog is crossing the street from left to right in the center of the frame, disrupting the normal flow of traffic. The person wears dark clothing and the dog is small and light brown.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The person and dog are clearly visible crossing the road. The dog appears to be on or near the road surface. The primary anomaly could be classified as animal_on_road or human_presence_anomaly; the dog on the road is the more unusual element. Minor quibble: 'disrupting normal flow of traffic' is slightly overstated for a quiet urban street."
+      },
+      "usage": {
+        "input_tokens": 1183,
+        "output_tokens": 162,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00198.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized truck is positioned on the right side of a multi-lane road. The truck is large and appears to be taking up more space than a standard vehicle, making it difficult for other vehicles to pass comfortably.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.72,
+        "description_factuality": 2,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The description says the truck is on the right side, but the large dump truck is actually ahead/center of the ego vehicle. The road appears to be a narrow construction zone road, not a multi-lane road. There is also a crane/construction vehicle visible on the right side which is not mentioned. The description misses the construction zone context entirely."
+      },
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 146,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00202.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer truck is situated in the center-right of the frame, encroaching into the left lane of a multi-lane road. The truck's bulk protrudes over the lane divider line.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.88,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The truck appears to be in the right lane/side of the road rather than clearly 'encroaching into the left lane' \u2014 it seems to be traveling in or near the correct lane. The description overstates the lane encroachment. Also, there is dark exhaust smoke visible from the truck which is not mentioned."
+      },
+      "usage": {
+        "input_tokens": 1183,
+        "output_tokens": 142,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00203.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer truck is traveling in the right lane on a multi-lane road. It appears oversized compared to typical vehicles on the road.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The truck appears to be in the center/right lane, not exclusively the right lane. Description misses a person in an orange vest on the roadside, which could be a secondary hazard. Otherwise accurate."
+      },
+      "usage": {
+        "input_tokens": 1169,
+        "output_tokens": 117,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00214.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A series of traffic cones and square-patterned barriers are placed along the right lane of the road, causing partial obstruction. These objects have orange and white checkered and striped patterns, extending in a line along the right side.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.6,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The barriers are described as 'square-patterned' which is roughly accurate (checkered pattern). The cones and barriers appear to run along the center/right of the road rather than strictly the right lane only. The description is mostly accurate but slightly understates that the lane separation extends down the center of the road as a construction/work zone setup. This could also be classified as infrastructure construction rather than a pure 'strange object' anomaly."
+      },
+      "usage": {
+        "input_tokens": 1189,
+        "output_tokens": 167,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00226.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "A small dog stands stationary on a paved road slightly to the left of center. The animal is dark-colored and appears to be calm.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.97,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The dog appears to be roughly centered in the road rather than slightly to the left of center. Description is accurate but incomplete \u2014 it omits the surrounding context (industrial/commercial area, vehicles on the right, truck ahead) which are relevant scene elements."
+      },
+      "usage": {
+        "input_tokens": 1113,
+        "output_tokens": 122,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00229.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized construction vehicle occupies the center of the frame on a multi-lane road, identifiable by its large yellow structure mounted on a flatbed. The vehicle extends across the width of one lane, with its equipment protruding slightly into adjacent lanes.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.97,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The vehicle is an XCMG mobile crane (not simply a flatbed with mounted equipment). It is not clearly 'extending into adjacent lanes' \u2014 it appears to occupy one lane normally. The description is roughly accurate but misidentifies the vehicle type and overstates lane intrusion."
+      },
+      "usage": {
+        "input_tokens": 1192,
+        "output_tokens": 134,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00231.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "Adverse lighting conditions occur at night on a city road, with limited light sources creating dark areas, making it difficult to see other road elements clearly. A truck is ahead near the center of the frame, partially obscured by darkness.",
+      "claude_response": {
+        "your_class": "adverse_lighting",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The object ahead appears to be a roadside structure or barrier/booth rather than a truck - it looks like a fixed installation with an awning/canopy, not a moving vehicle. The description of adverse lighting and darkness is accurate, but misidentifies the central object."
+      },
+      "usage": {
+        "input_tokens": 1186,
+        "output_tokens": 130,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00237.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large construction vehicle with an extended arm is parked on the right side of a two-lane road, partially occupying the roadway. The vehicle is stationary and its size is significant, standing out against the smaller vehicles on the road.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The vehicle appears to be a concrete pump truck (not just a generic 'construction vehicle with extended arm'), and it seems parked on the right side rather than fully occupying the roadway. Minor imprecision but overall correct."
+      },
+      "usage": {
+        "input_tokens": 1189,
+        "output_tokens": 128,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00238.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A bicycle is lying on the road in front of a blocked gate at night. It is difficult to pass due to the positioning in the center-left of the frame near concrete barriers.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.55,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description mentions a bicycle lying on the road, but the primary object visible appears to be a scooter/moped (not a bicycle) positioned on the road near concrete barriers. Additionally, there is significant blinding glare from a headlight on the left side which is a notable hazard not mentioned. The concrete barriers blocking the road are the more prominent anomaly. The description misidentifies the vehicle type."
+      },
+      "usage": {
+        "input_tokens": 1176,
+        "output_tokens": 159,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00239.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large yellow construction vehicle is stationary on the right side of the road beside a construction site. It is placed on the sidewalk, not obstructing the driving lanes.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is roughly accurate but claims the vehicle is on the sidewalk and not obstructing lanes \u2014 it appears to partially encroach on the road shoulder/rightmost lane area. The vehicle is a paving/asphalt machine (Volvo paver), which is correctly identified as a large construction vehicle. The claim it is purely on the sidewalk and not obstructing is somewhat inaccurate."
+      },
+      "usage": {
+        "input_tokens": 1175,
+        "output_tokens": 161,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00240.png",
+      "gt_class": "vehicle_incident",
+      "gt_description": "A silver sedan is on fire in the center lane of a multi-lane highway, with flames and thick black smoke rising into the air. The black pickup truck to its right is partially obscured by smoke.",
+      "claude_response": {
+        "your_class": "vehicle_incident",
+        "class_confidence": 0.97,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The vehicle to the right appears to be a dark sedan/car rather than a pickup truck, and the silver sedan's hood is visibly crumpled suggesting a prior collision. Otherwise description is accurate."
+      },
+      "usage": {
+        "input_tokens": 1517,
+        "output_tokens": 110,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00243.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large yellow construction vehicle is positioned in the center of the frame, occupying the right lane. It is a crane vehicle with a noticeable width and height, carrying a spare tire at the back.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The vehicle is a SANY branded construction/crane vehicle. Description is mostly accurate - it correctly identifies it as a large yellow construction vehicle with a spare tire. Calling it specifically a 'crane vehicle' is reasonable given the SANY branding and construction equipment appearance. Minor inaccuracy: it appears to be in the center/left lane rather than strictly the right lane, and the vehicle appears to be more of a mobile crane or specialized construction equipment rather than just a generic crane vehicle."
+      },
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 176,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00244.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "An oversized cement mixer truck is traveling in the center-right lane of a multi-lane highway. The truck's large size and rear apparatus extend significantly compared to typical vehicles on the road.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.95,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The truck appears to be in the right lane rather than center-right, and 'oversized' is a slight overstatement \u2014 cement mixers are large but not necessarily legally 'oversized'. Otherwise the description is accurate."
+      },
+      "usage": {
+        "input_tokens": 1178,
+        "output_tokens": 122,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00246.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "Two large orange tanker trucks parked on the right side of the road, partially encroaching onto the roadway. The trucks are brightly colored with multiple reflected cones placed along their periphery.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.75,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate but misses the person walking on the road (potential human presence anomaly) and the construction crane visible in the background. The trucks appear to be vacuum/sewage trucks rather than generic tankers. The cones are placed along the side of the trucks, not 'along their periphery' exactly. Overall the main anomaly (large unusual vehicles) is correctly identified."
+      },
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 156,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00248.png",
+      "gt_class": "strange_object_on_road",
+      "gt_description": "A small, dark object is positioned in the center of a two-lane road, appearing isolated on the wet surface. It is not obstructing other lanes or the motorcycle on the right.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 2,
+        "agrees_with_description": true,
+        "issues": "The description identifies the small dark object on the road but misses the motorcycle parked on the right shoulder as a notable element. The road surface appears icy/snowy rather than simply 'wet', and there is also significant sun glare in the image. The description is incomplete in context but roughly accurate about the object itself."
+      },
+      "usage": {
+        "input_tokens": 1178,
+        "output_tokens": 141,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00253.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "The scene is poorly lit, with only the rear lights of a large green truck visible in the center of the frame. The truck's reflective markings are partially visible, highlighting its size and position on the road.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.72,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate but misses the construction zone barriers (yellow/black striped concrete barriers) visible alongside the truck, and the tight/constrained road situation. Also does not mention what appears to be a motorcycle to the left. The scene suggests a construction zone or road narrowing which adds context beyond just the truck."
+      },
+      "usage": {
+        "input_tokens": 1183,
+        "output_tokens": 140,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00256.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "Several large construction vehicles, including excavators, are stationed on the left shoulder of the road. They are brightly colored and positioned close to the lane of traffic.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.85,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate. The excavators are indeed on the left side near the road. 'Shoulder' is slightly misleading as they appear to be partially on the road/lane edge rather than purely on a shoulder. Also misses a road roller/compactor among the construction vehicles."
+      },
+      "usage": {
+        "input_tokens": 1172,
+        "output_tokens": 134,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00257.png",
+      "gt_class": "infrastructure_failure",
+      "gt_description": "A large highway sign is partially fallen and leaning over the left and center lanes of a multi-lane highway. The sign is hanging on wires with its base dislodged and debris scattered around the impacted area, obstructing vehicle passage.",
+      "claude_response": {
+        "your_class": "infrastructure_failure",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The fallen structure appears to be a large sign gantry or overhead structure leaning across lanes with wires and debris scattered on the road surface. Minor inaccuracy: it leans more toward center/right lanes rather than strictly left and center lanes, and 'hanging on wires' slightly overstates the situation as it appears more structurally collapsed than suspended."
+      },
+      "usage": {
+        "input_tokens": 1527,
+        "output_tokens": 152,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00266.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "There is adverse lighting in the scene, primarily affecting the right side. The road is poorly lit under nighttime conditions, with minimal illumination provided by the red light on the right.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.6,
+        "description_factuality": 2,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The most notable anomaly is a large vehicle (likely a truck or construction vehicle) on the right side of the road with a chevron warning sign and red taillights, suggesting a road work or oversized vehicle situation. The description focuses only on lighting conditions and misses the primary anomaly. While it is nighttime, the darkness is not extreme enough to classify as adverse_lighting on its own \u2014 the main concern is the large vehicle partially obstructing the lane."
+      },
+      "usage": {
+        "input_tokens": 1176,
+        "output_tokens": 171,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00274.png",
+      "gt_class": "vehicle_incident",
+      "gt_description": "A large white truck is stationary on the right lane of a multi-lane highway. The truck occupies part of the lane, partially obstructing it while traffic cones line the adjacent lane.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.75,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The truck does not appear clearly stationary \u2014 it could be moving. The description says the truck is 'partially obstructing' a lane, but it appears to be driving normally in its lane. The traffic cones are more prominently lining the left/median side, not just the adjacent lane. The truck is a semi-truck cab without a trailer visible, or with a flatbed. Overall description is roughly accurate but contains some inaccuracies."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 170,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00278.png",
+      "gt_class": "extreme_weather",
+      "gt_description": "Thick fog obscures the view on a narrow rural road. The fog covers the entire scene from the foreground to the vanishing point, making it difficult to see beyond a short distance ahead.",
+      "claude_response": {
+        "your_class": "extreme_weather",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 2,
+        "agrees_with_description": true,
+        "issues": "The description correctly identifies the dense fog but completely omits the cattle grid/livestock grid in the foreground of the road, which is a notable infrastructure element. The fog is real and severe, but the description misses a major visible element."
+      },
+      "usage": {
+        "input_tokens": 1515,
+        "output_tokens": 123,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00282.png",
+      "gt_class": "road_surface_hazard",
+      "gt_description": "Green covering material is loosely placed along both sides of a two-lane road, extending slightly into the roadway.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.45,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The green covering material is primarily on the sides/shoulders, not clearly extending into the roadway. The description misses other notable elements: the dark smoke cloud visible in the sky, the construction/road work context with barriers in the road, and a vehicle ahead. The scene looks like an active construction zone rather than a simple road anomaly. The primary anomaly could be argued as infrastructure/road construction with barriers on the road rather than the covering material itself."
+      },
+      "usage": {
+        "input_tokens": 1163,
+        "output_tokens": 167,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00283.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Several large hay bales are scattered in the center-right lane of a multi-lane highway. The hay bales appear compact and rectangular, with some loose straw spread around. Traffic continues to move in adjacent lanes.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.82,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The description misses the primary source of the hazard: a large truck loaded with hay bales that is actively losing its cargo onto the highway. The hay bales are falling/fallen from this truck, not simply 'scattered' without cause. Additionally, the bales are spread across the center lane(s), not just 'center-right.' The truck itself is an oversized/unusual vehicle carrying an agricultural load, making this a compound hazard (fallen debris + oversized vehicle shedding load). The description only partially captures the scene by noting the hay bales and traffic but omits the truck entirely."
+      },
+      "usage": {
+        "input_tokens": 1520,
+        "output_tokens": 200,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00288.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "A small dog stands in the street near the center-right of the frame, appearing stationary and looking to the side. It is positioned on the asphalt surface in front of parked vehicles.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.9,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The dog appears to be on the road/near the curb area rather than clearly on the main asphalt travel lane, but the description is largely accurate. The dog's exact position relative to the road vs. sidewalk edge is slightly ambiguous."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 123,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00290.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large construction vehicle is stationary in the center of the frame, occupying much of the lane. The vehicle is yellow with recognizable construction markings and covers a substantial part of the roadway.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.97,
+        "description_factuality": 4,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "Description is mostly accurate but calls the vehicle 'stationary' when it appears to be in traffic (brake lights visible but moving traffic context). Also misses identifying it as an XCMG crane/construction vehicle specifically, and doesn't mention the yellow van alongside it."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 130,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00297.png",
+      "gt_class": "adverse_lighting",
+      "gt_description": "Poor lighting conditions are present at night on a road with minimal streetlights. A yellow vehicle with an attached red umbrella is visible on the right-hand side, obscured by darkness.",
+      "claude_response": {
+        "your_class": "adverse_lighting",
+        "class_confidence": 0.55,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The yellow vehicle appears to be a small utility/construction truck (not simply described as such), and the 'red umbrella' is likely a red canopy or cover on the truck or nearby. The description mentions the vehicle is on the 'right-hand side' but it appears more centrally located. The adverse lighting/darkness is correctly identified as the primary concern. However, the scene also shows what appears to be a construction or unusual vehicle which could be the primary anomaly rather than just lighting."
+      },
+      "usage": {
+        "input_tokens": 1178,
+        "output_tokens": 173,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00301.png",
+      "gt_class": "animal_on_road",
+      "gt_description": "A small white and brown dog is moving across the cobblestone road in the center of the frame. The dog is trotting and heading towards the left side of the road.",
+      "claude_response": {
+        "your_class": "animal_on_road",
+        "class_confidence": 0.92,
+        "description_factuality": 4,
+        "description_completeness": 4,
+        "agrees_with_description": true,
+        "issues": "The description is mostly accurate. The dog appears to be white and brown/orange colored on the cobblestone road. Direction of movement is slightly uncertain but plausible. The description correctly identifies the main anomaly."
+      },
+      "usage": {
+        "input_tokens": 1120,
+        "output_tokens": 115,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00307.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large cement mixer truck is traveling slowly in the center of the lane on a two-lane rural road, occupying a significant amount of space. Its massive size restricts the normal flow of traffic.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.9,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The truck appears to be a cement mixer, which is correct. However, it is not clearly in the 'center' of the lane - it appears to be in its own lane on what looks like a two-lane road. The description overstates the traffic restriction as there is no visible traffic being impeded. The road also appears to have more than two lanes (with lane markings visible). The truck's size is notable but the description somewhat exaggerates the hazard."
+      },
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 173,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00310.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A pedestrian in an orange coat walks on the street close to the right edge where a vehicle is parked, with two small objects placed on the ground beside a cord extending to the road.",
+      "claude_response": {
+        "your_class": "strange_object_on_road",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": false,
+        "issues": "The primary anomaly is a cord/cable extending from the Toyota SUV's rear (likely a charging cable or tow cable) onto the road surface, with a device/object attached. The vehicle is not parked but appears to be in the travel lane. The pedestrian in the orange coat is walking near the roadside, not clearly in the road. Description captures the cord and objects but misidentifies the vehicle as parked and underemphasizes the cable trailing into the road as the main hazard."
+      },
+      "usage": {
+        "input_tokens": 1178,
+        "output_tokens": 179,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00312.png",
+      "gt_class": "oversized_or_unusual_vehicle",
+      "gt_description": "A large mixer truck occupies the full width of the left lane at an intersection, partially blocking traffic flow. The truck has a worn appearance with visible concrete residue.",
+      "claude_response": {
+        "your_class": "oversized_or_unusual_vehicle",
+        "class_confidence": 0.92,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description says the truck 'occupies the full width of the left lane at an intersection' but the truck appears to be on the left side of the frame, not necessarily blocking an intersection. It also doesn't mention that the chute/discharge mechanism is extended and visible prominently in the foreground. The description is roughly accurate but overstates lane blockage and misses the extended chute detail."
+      },
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 158,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00318.png",
+      "gt_class": "fallen_debris_or_vegetation",
+      "gt_description": "Numerous wooden planks are scattered across the center of the highway, protruding into the left lane. The planks are long and light-colored, with varying angles, creating an obstacle on the road surface.",
+      "claude_response": {
+        "your_class": "multi_hazard_compound",
+        "class_confidence": 0.82,
+        "description_factuality": 4,
+        "description_completeness": 2,
+        "agrees_with_description": false,
+        "issues": "The description accurately captures the wooden planks scattered on the road but fails to mention the large truck ahead that is clearly losing/has lost its cargo (lumber load visible on truck bed), which is a critical part of the scene. The compound hazard of both the debris on the road AND the truck that dropped it (an oversized vehicle with an unsecured load) is not captured. Description is incomplete as it misses the primary cause of the hazard."
+      },
+      "usage": {
+        "input_tokens": 1519,
+        "output_tokens": 166,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    {
+      "filename": "data_00319.png",
+      "gt_class": "human_presence_anomaly",
+      "gt_description": "A person is walking close to traffic cones in the center-right lane of a road during nighttime, making them less visible to drivers. Nearby, a large vehicle in motion further complicates the situation.",
+      "claude_response": {
+        "your_class": "human_presence_anomaly",
+        "class_confidence": 0.72,
+        "description_factuality": 3,
+        "description_completeness": 3,
+        "agrees_with_description": true,
+        "issues": "The description is roughly accurate - there appears to be a person near traffic cones and a large green vehicle (likely a truck or bus) on the right side. However, the person's exact position and visibility are hard to confirm with certainty given the dark nighttime conditions. The description somewhat overstates the clarity of what is visible."
+      },
+      "usage": {
+        "input_tokens": 1183,
+        "output_tokens": 141,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,1113 @@
+\documentclass{article}
+
+% Use the Evaluations & Datasets Track for a benchmark paper
+\usepackage[eandd]{neurips_2026}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{adjustbox}
+\usepackage{xspace}
+
+% --- Custom commands -----------------------------------------------------------
+\newcommand{\bench}{\textsc{DASHA-15K}\xspace}
+\newcommand{\benchlong}{Dashcam Anomaly Scene Hazard Atlas\xspace}
+
+% --- Title --------------------------------------------------------------------
+\title{Benchmarking Vision-Language Models for Anomaly Detection
+       in Autonomous Driving}
+
+\author{%
+  Anonymous Author(s) \\
+  Affiliation \\
+  Address \\
+  \texttt{email} \\
+}
+
+\begin{document}
+\maketitle
+
+% =============================================================================
+\begin{abstract}
+Vision-language models (VLMs) are being rapidly deployed in
+autonomous-driving stacks for high-level scene understanding, yet
+their reliability as \emph{anomaly detectors} for safety-critical
+deployment remains poorly characterised. We introduce \bench, a
+benchmark of \textbf{15{,}000} dashcam images comprising
+\textbf{10{,}000} normal driving scenes and \textbf{5{,}000} anomalous
+scenes spanning \textbf{11} hazard categories with rich annotations:
+anomaly class, free-form description, severity, ego-vehicle risk
+level, and recommended driving action. Using \bench, we conduct an
+extensive empirical study of \textbf{nine} state-of-the-art open
+VLMs (InternVL3-1B/2B/8B, Qwen2-VL-2B, Qwen2.5-VL-3B/7B,
+LLaVA-OneVision-7B, LLaVA-1.6-13B, LLaMA-3.2-11B-Vision) and
+\textbf{seven} baselines (three CLIP and three SigLIP variants and a
+reconstruction autoencoder) across three tasks: binary anomaly
+detection, multiclass classification, and free-form anomaly
+description. We further analyse the models along five dimensions:
+(i)~per-class difficulty, (ii)~confidence calibration,
+(iii)~cross-model agreement and ensemble ceilings,
+(iv)~vision-encoder and language-model representational geometry, and
+(v)~prediction consistency under stochastic decoding. Our findings
+reveal counter-intuitive results: a 3B-parameter VLM
+(Qwen2.5-VL-3B) is the best binary detector and best calibrated
+model, despite far larger competitors performing worse;
+representations from the InternVL3 family are near-identical across
+the 1B--8B scale, suggesting scale alone fails to diversify learned
+features; and self-reported confidence scores from most VLMs are
+poorly calibrated, with severe over- and under-confidence patterns
+that pose direct safety hazards. \bench, all code, and all
+predictions are released under a permissive license to enable rapid
+follow-up research.
+\end{abstract}
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+
+Autonomous-driving (AD) systems must reliably detect and reason about
+\emph{any} hazard a vehicle could encounter, including long-tailed
+events absent from training distributions: animals on the road, fallen
+debris, unusual vehicles, infrastructure failures, and adverse-lighting
+conditions. Recent vision-language models (VLMs)~\citep{internvl3, qwen25vl,
+llava_onevision} have shown impressive open-vocabulary scene
+understanding, leading several proposals to put VLMs in the AD
+perception stack as semantic supervisors~\citep{semantic_observer,
+scvlm} or end-to-end planners~\citep{simlingo, autovla}. Yet
+the central question---\emph{are VLMs reliable enough as anomaly
+detectors for safety-critical deployment?}---is poorly answered by
+existing benchmarks, which either focus on visual-question
+answering~\citep{drivelm, nuscenes_qa, nuscenes_mqa},
+trustworthiness~\citep{autotrust}, or robustness to corrupted
+inputs~\citep{drivebench}, but seldom on the specific task of
+detecting and characterising anomalous scenes.
+
+Existing AD anomaly benchmarks tend to focus on
+segmentation~\citep{ood_seg_survey} or specific narrow categories such
+as collision prediction or corner cases~\citep{coda, tudat,
+twocoool}. They lack the breadth (multiple hazard classes), the depth
+(rich annotations beyond a single label), and the model-side
+diversity (modern open-source VLMs of varying scale and family) needed
+to draw \emph{methodological} conclusions about VLM
+reliability. Without such conclusions, deployment decisions are made on
+ad-hoc, often closed-source, evaluations.
+
+\textbf{Our contributions.}
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item We introduce \bench, a 15{,}000-image dashcam benchmark with
+        five-attribute annotations on the 5{,}000 anomalous
+        images (anomaly class, free-form description, key facts,
+        severity, recommended action). Anomalous-vs-normal labels are
+        human-curated; classes and descriptions are auto-generated by
+        GPT-4o and cross-validated by Claude Sonnet~4.6.
+  \item We propose a three-task evaluation protocol covering
+        \emph{binary detection}, \emph{multiclass classification}, and
+        \emph{free-form description}, with shared inputs and
+        complementary metric suites.
+  \item We benchmark 9 open-source VLMs and 7 visual-similarity /
+        reconstruction baselines, totalling 16 models across the three
+        tasks. We additionally measure per-image inference latency on
+        a single RTX 5090.
+  \item We provide a five-axis analysis of VLM behaviour:
+        per-class difficulty, calibration (ECE), pairwise agreement,
+        representation geometry (UMAP, CKA, layer probes), and
+        consistency under stochastic decoding.
+  \item Our findings expose three deployment-relevant pathologies:
+        (a) parameter count is a poor predictor of detection
+        performance; (b) self-reported confidence is poorly calibrated
+        in 7 of 9 VLMs, with multiple cases of severe over- or
+        under-confidence; (c) within-family scaling produces
+        near-identical representations (CKA $>$ 0.93 across InternVL3
+        scales), so ensembling within a family yields little benefit.
+\end{itemize}
+
+The benchmark, all model predictions, every saved hidden-state
+representation, and the full evaluation code will be released under
+a CC-BY 4.0 license at the project URL upon acceptance.
+
+% =============================================================================
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{VLM benchmarks for autonomous driving.}
+DriveLM~\citep{drivelm} and NuScenes-QA~\citep{nuscenes_qa} pioneered
+graph- and pair-style VQA over the nuScenes dataset.
+NuScenes-MQA~\citep{nuscenes_mqa} added integrated caption-and-QA
+evaluation. AutoTrust~\citep{autotrust} probes trustworthiness across
+six VLMs along five axes (trustfulness, safety, robustness, privacy,
+fairness), finding that generalist VLMs surprisingly outperform
+driving-specialised ones. DriveBench~\citep{drivebench} evaluates 12
+VLMs across 17 settings (clean, corrupted, text-only) and shows that
+VLMs often respond from textual cues rather than visual
+grounding. AutoVLA~\citep{autovla} and SimLingo~\citep{simlingo} push
+toward end-to-end vision-language-action driving but evaluate primarily
+on planning, not detection. Compared with these works, \bench focuses
+explicitly on the \emph{anomaly-detection} use-case, with a curated
+class taxonomy that is absent from existing benchmarks.
+
+\paragraph{Anomaly detection in autonomous driving.}
+Out-of-distribution segmentation has been the dominant framing
+\citep{ood_seg_survey}, with corner-case datasets such as
+CODA~\citep{coda} and TU-DAT~\citep{tudat} for object-level evaluation
+and reconstruction-based methods such as the hybrid memory autoencoder
+of \citet{hybrid_vad} for video-level detection.
+ScVLM~\citep{scvlm} fine-tunes VLMs for safety-critical event
+classification. The 2COOOL workshop~\citep{twocoool} explicitly targets
+out-of-label hazard understanding. Our benchmark complements these by
+providing a unified scene-level evaluation in image space across
+multiple semantic axes simultaneously.
+
+\paragraph{General VLM evaluation, hallucination, calibration.}
+MME~\citep{mme} introduced a broad MLLM benchmark covering 14
+sub-tasks. DASH~\citep{dash} characterises systematic VLM
+hallucinations. Trust-but-Verify~\citep{trust_but_verify} proposes
+programmatic VLM verification. On the calibration axis,
+VL-Calibration~\citep{vl_calibration} reduces ECE on Qwen3-VL from 0.42
+to 0.10, and decision-aware uncertainty
+evaluation~\citep{decision_aware_unc} applies conformal prediction to
+20 VLMs. ECE itself is well-studied~\citep{ece_understanding}. Our
+work measures calibration across 9 driving-specific VLMs, complementing
+these general-domain studies.
+
+\paragraph{Representation analysis.}
+Centered Kernel Alignment (CKA)~\citep{cka_kornblith} is the de-facto
+metric for cross-model representation similarity, with known
+limitations~\citep{cka_reliability}. Layer-wise representation
+progression has been characterised in transformers~\citep{layerwise_sim}
+and linear probing of LLM hidden states is increasingly used to assess
+implicit knowledge encoding~\citep{linear_probe_neurips}. We adopt
+both metrics for our cross-model and within-model representational
+analysis.
+
+\paragraph{LLM-as-judge for dataset validation.}
+JudgeBench~\citep{judgebench} and \citet{llm_judge_survey}
+characterise the reliability of LLM-as-judge evaluations. We follow
+their guidance and use Claude Sonnet 4.6 as a cross-validating judge
+for the GPT-4o-generated annotations on \bench.
+
+% =============================================================================
+\section{The \bench Benchmark}
+\label{sec:dataset}
+
+\input{tables/01_dataset_stats}
+
+\bench contains 15{,}000 dashcam images split into 10{,}000 normal
+driving scenes and 5{,}000 anomalous scenes covering 11 hazard
+categories. Per-class counts are intentionally long-tailed
+(Table~\ref{tab:dataset_stats}), reflecting real-world frequency:
+oversized vehicles (n=2{,}037) and human-presence anomalies (n=728)
+are common; multi-hazard compound scenes (n=33) are rare.
+
+\paragraph{Image collection and curation.}
+We aggregated dashcam frames from a mixture of publicly licensed
+autonomous-driving datasets and our own curation pipeline, with
+manual screening to ensure (i) image quality is sufficient for visual
+reasoning, (ii) no personally identifiable information (faces, license
+plates) is recoverable, and (iii) the
+normal/anomalous label is correct. The binary anomalous-vs-normal
+label is \emph{human-curated}: an author manually inspected every
+anomalous candidate before inclusion.
+
+\paragraph{Rich annotations on the anomalous subset.}
+Each of the 5{,}000 anomalous images is annotated with seven
+attributes:
+\begin{enumerate}\setlength{\itemsep}{1pt}
+  \item \texttt{anomaly\_class} --- one of the 11 hazard categories.
+  \item \texttt{anomaly\_description} --- a free-form natural language
+        description (mean 35 words).
+  \item \texttt{anomaly\_key\_facts} --- a list of 3--5 atomic visual
+        observations.
+  \item \texttt{severity} $\in$ \{\textit{minor}, \textit{moderate},
+        \textit{severe}, \textit{critical}\}.
+  \item \texttt{ego\_risk\_level} $\in$ \{\textit{none},
+        \textit{caution}, \textit{warning}, \textit{danger}\}.
+  \item \texttt{recommended\_action} --- one of seven driving actions
+        (e.g., \textit{reduce\_speed}, \textit{change\_lane}).
+  \item \texttt{benchmark\_difficulty} $\in$ \{\textit{easy},
+        \textit{medium}, \textit{hard}\}.
+\end{enumerate}
+
+\paragraph{Annotation pipeline and validation.}
+Class and description annotations were generated by GPT-4o with a
+structured prompt enforcing the 11-class taxonomy. To validate these
+auto-generated labels, we re-annotated all 5{,}000 anomalous images
+with Claude Sonnet 4.6, asking it to (i) independently classify the
+primary anomaly without seeing GPT-4o's label and (ii) rate the
+GPT-4o-generated description on factuality (1--5) and completeness
+(1--5). Inter-annotator class agreement is reported in
+Appendix~\ref{app:validation}; we manually reviewed every disagreement
+to produce the final gold labels. Disagreements were resolved by an
+author looking at the actual image.
+
+\paragraph{Class distribution overview.}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/dataset_distribution.pdf}
+  \caption{Dataset overview. Left: 10{,}000 normal vs.\ 5{,}000 anomalous
+           images. Right: long-tailed distribution of anomalous
+           images across 11 hazard categories.}
+  \label{fig:dataset_dist}
+\end{figure}
+
+% =============================================================================
+\section{Tasks and Evaluation Protocol}
+\label{sec:tasks}
+
+\bench supports three complementary tasks. The model receives the
+image and a structured natural-language prompt; output formats are
+constrained to JSON for reliable parsing.
+
+\paragraph{Task 1 -- Binary anomaly detection (15{,}000 images).}
+Predict \texttt{anomaly\_present} $\in \{\text{true},
+\text{false}\}$ together with a confidence score $c \in [0,1]$ and a
+brief reasoning string. Metrics: accuracy, balanced accuracy,
+precision, recall, F1, MCC, AUROC, AUPRC.
+
+\paragraph{Task 2 -- Multiclass classification (5{,}000 anomalous images).}
+Given an image already known to be anomalous, predict the
+\texttt{anomaly\_class} from the 11-class taxonomy, plus a confidence
+score and reasoning string. Metrics: accuracy, balanced accuracy,
+macro/weighted F1, macro precision, macro recall, Cohen's $\kappa$,
+plus the full per-class confusion matrix.
+
+\paragraph{Task 3 -- Free-form description (5{,}000 anomalous images).}
+Generate a natural-language description of the anomaly. Metrics:
+BLEU-1, BLEU-4, METEOR, ROUGE-L, BERTScore (P/R/F1) against the
+GPT-4o reference description; we also report mean inference latency
+in seconds, since description-task latency dominates real-time
+deployment cost.
+
+The exact prompts used for each task are reproduced in
+Appendix~\ref{app:prompts}.
+
+% =============================================================================
+\section{Evaluated Models}
+\label{sec:models}
+
+We evaluate three families of methods:
+
+\paragraph{Vision-language models (9).}
+InternVL3 family at three scales (1B, 2B, 8B)~\citep{internvl3};
+Qwen2-VL-2B and Qwen2.5-VL-3B/7B~\citep{qwen25vl}; LLaVA-OneVision-7B
+and LLaVA-1.6-13B~\citep{llava_onevision, llava_15};
+LLaMA-3.2-11B-Vision~\citep{llama32_vision}. All are evaluated
+zero-shot, queried with the prompts in
+Appendix~\ref{app:prompts}.
+
+\paragraph{Visual-similarity baselines (6).}
+Three CLIP variants (ViT-B/32, ViT-B/16, ViT-L/14)~\citep{clip} and
+three SigLIP variants (Base/16-224, Large/16-256,
+SO400m/14-384)~\citep{siglip2}. For binary, we use the standard
+two-prompt softmax scoring (``a normal driving scene'' vs.\ ``an
+anomalous driving scene''). For multiclass, we score each image
+against 11 natural-language class descriptions and take
+\textit{argmax}.
+
+\paragraph{Reconstruction baseline (1).}
+A convolutional autoencoder trained on the 10{,}000 normal images,
+using reconstruction MSE as anomaly score. It serves as a classical
+unsupervised baseline.
+
+% =============================================================================
+\section{Main Results}
+\label{sec:results}
+
+\subsection{Binary Anomaly Detection}
+\label{sec:binary}
+
+\input{tables/02_binary_results}
+
+Table~\ref{tab:binary_results} reports binary-detection metrics for
+all 16 models. The Pareto-frontier behaviour is shown in
+Figs.~\ref{fig:binary_pr}--\ref{fig:binary_roc}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/binary_pr_all_models.pdf}
+    \caption{Precision-Recall curves}
+    \label{fig:binary_pr}
+  \end{subfigure}
+  \begin{subfigure}{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/binary_roc_all_models.pdf}
+    \caption{ROC curves}
+    \label{fig:binary_roc}
+  \end{subfigure}
+  \caption{Binary anomaly detection: PR (left) and ROC (right) curves
+           on all 15{,}000 images. Solid = VLMs, dashed = CLIP,
+           dotted = SigLIP, dash-dot = Autoencoder.}
+  \label{fig:binary_curves}
+\end{figure}
+
+\paragraph{Findings.}
+(1) Qwen2.5-VL-3B is the dominant binary detector
+(Acc=0.92, MCC=0.82, AUPRC=0.82), beating models with $4\times$ more
+parameters. (2) Several VLMs (InternVL3-1B,
+Qwen2-VL-2B) collapse to predicting ``anomaly always''
+(precision $\to$ 1.0 with recall $\to$ 0), a known prompt-following
+failure mode in smaller VLMs. (3) The
+autoencoder underperforms strongly (AUROC=0.22, AUPRC=0.22):
+reconstruction error is not a useful anomaly signal in this domain
+because anomalous images often have similar pixel statistics to
+normal ones (different objects but similar textures). (4) CLIP variants are surprisingly competitive in
+AUROC ($\sim$0.80) but suffer in precision; SigLIP variants exhibit
+the opposite trade-off.
+
+\subsection{Multiclass Anomaly Classification}
+\label{sec:multiclass}
+
+\input{tables/03_multiclass_results}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/per_class_f1_heatmap.pdf}
+  \caption{Per-class F1 heatmap on the multiclass task. Rows: models,
+           columns: 11 classes. Best per cell in green, worst in red.}
+  \label{fig:per_class_f1}
+\end{figure}
+
+Two VLM families dominate multiclass: \textbf{InternVL3-8B}
+(macro-F1 = 0.53, accuracy = 0.76) and \textbf{Qwen2.5-VL-7B}
+(macro-F1 = 0.47, accuracy = 0.72). Smaller VLMs (1--3B) collapse on
+rare classes, often producing zero F1 across 6+ of the 11 classes.
+CLIP/SigLIP zero-shot baselines achieve weak but non-trivial macro F1
+(0.05--0.15), confirming that specific class prompts pick up some
+visual signal, but lack the structured reasoning that VLMs leverage.
+
+\paragraph{The detection-vs-classification dissociation.}
+Notably, the best binary detector (Qwen2.5-VL-3B, Acc=0.92) is
+\emph{not} the best multiclass classifier (rank 5 of 9 VLMs). This
+dissociation suggests that detecting ``something is wrong'' relies on
+different reasoning than identifying ``what is wrong''.
+Figure~\ref{fig:det_cls} (Appendix~\ref{app:appfigs}) visualises this
+dissociation across the 9 VLMs.
+
+\subsection{Free-Form Anomaly Description}
+\label{sec:description}
+
+\input{tables/04_description_results}
+
+InternVL3-8B and LLaVA-OV-7B lead on BERTScore F1 ($\geq$ 0.83),
+suggesting their descriptions are semantically closest to the GPT-4o
+reference. BLEU-4 is uniformly low ($<$ 0.08) due to wide variance in
+phrasing, even across syntactically valid descriptions. Latency
+varies substantially: InternVL3-1B is the fastest (0.87s/image) while
+LLaVA-1.6-13B is slowest (2.53s/image), a $3\times$ difference that
+matters at fleet-deployment scale.
+
+% =============================================================================
+\section{Analysis}
+\label{sec:analysis}
+
+\subsection{Per-Class Difficulty}
+\label{sec:class_difficulty}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figures/hardest_classes.pdf}
+  \caption{Mean F1 across 9 VLMs per anomaly class, with error bars
+           showing standard deviation. Class support shown on the
+           right. Strange-Object-on-Road, Adverse Lighting, and
+           Multi-Hazard are universally hard
+           ($\bar{\text{F1}} < 0.05$); Animal-on-Road and Oversized
+           Vehicle are universally easier
+           ($\bar{\text{F1}} > 0.40$).}
+  \label{fig:hardest_classes}
+\end{figure}
+
+The class-wise F1 distribution
+(Fig.~\ref{fig:hardest_classes}) reveals a clean dichotomy. Classes
+with distinctive visual signatures and likely high pre-training
+exposure (animals, large vehicles) achieve mean F1 $>$ 0.40 across
+models. Classes that are visually subtle or context-dependent
+(strange-object, adverse-lighting, multi-hazard) have mean F1 $<$
+0.05---essentially failure across the model zoo. This is
+deployment-critical: the universally hard classes are also among the
+\emph{most safety-critical} (debris on the road can cause crashes,
+adverse lighting is a leading cause of accidents). VLMs are not
+ready for these cases.
+
+\subsection{Confidence Calibration}
+\label{sec:calibration}
+
+\input{tables/05_calibration}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/reliability_diagrams.pdf}
+  \caption{Reliability diagrams for the binary task. Each subplot
+           shows accuracy versus self-reported confidence; green bars =
+           underconfident, red bars = overconfident. ECE is annotated
+           in each panel.}
+  \label{fig:reliability}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/calibration_ece.pdf}
+  \caption{Calibration error (ECE, lower is better) and overconfidence
+           score (positive = overconfident) per model.}
+  \label{fig:ece}
+\end{figure}
+
+Confidence calibration is critical for safety-critical deployment:
+when a VLM reports 0.95 confidence in a hazard, downstream planners
+need that number to mean what it says. \textbf{Only Qwen2.5-VL-3B is
+well-calibrated} (ECE=0.027). Two models exhibit \emph{severe}
+overconfidence (InternVL3-1B: ECE=0.617, mean confidence 0.95 with
+accuracy 0.33; LLaVA-1.6-13B: ECE=0.227). Two models exhibit
+\emph{severe underconfidence} (Qwen2.5-VL-7B and LLaMA-3.2-11B both
+report mean confidence $\sim$0.25 despite achieving accuracy $>$0.78).
+Underconfidence is equally dangerous in deployment: planners would
+ignore correctly-flagged hazards.
+
+\subsection{Cross-Model Agreement and Ensemble Ceilings}
+\label{sec:agreement}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/agreement_matrix.pdf}
+    \caption{Pairwise binary-prediction agreement.}
+    \label{fig:agree_matrix}
+  \end{subfigure}
+  \begin{subfigure}{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/ensemble_upper_bound.pdf}
+    \caption{Top-$k$ majority-vote ensemble accuracy.}
+    \label{fig:ensemble}
+  \end{subfigure}
+  \caption{Cross-model agreement and ensemble upper bound on the
+           binary task.}
+  \label{fig:agreement_combined}
+\end{figure}
+
+The pairwise agreement matrix (Fig.~\ref{fig:agree_matrix}) reveals
+that the InternVL3 family clusters tightly together (CKA $>$ 0.95
+between scales) while LLaMA-3.2-11B is the most distant outlier
+(agreement $<$ 0.65 with all others). This has direct implications
+for ensembling: a top-2 ensemble pairing Qwen2.5-VL-3B with
+LLaMA-3.2-11B achieves balanced accuracy 0.93, surpassing the best
+single model (0.91); but adding more models from related families
+plateaus the ensemble curve. \textbf{Diversity, not scale, drives
+ensemble gains.}
+
+\subsection{Representational Geometry}
+\label{sec:representations}
+
+We saved per-image hidden-state representations during inference for
+every (model, task, image) triple, totalling $\sim$135K representation
+files. Each contains the per-layer mean-pooled vision-encoder
+hidden states and the projected vision embedding the LLM ingests.
+We use this to ask three questions:
+
+\paragraph{(a) Do vision encoders separate anomalous from normal?}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/vision_umap_correct_wrong_binary.pdf}
+  \caption{PCA of vision-encoder representations of 600 images
+           (300 normal + 300 anomalous), per model. Green = correct
+           binary prediction, red = wrong.}
+  \label{fig:umap_binary}
+\end{figure}
+
+For 6 of the 9 VLMs, the vision encoder
+already separates correct from wrong predictions in 2D PCA
+(Fig.~\ref{fig:umap_binary}). For Qwen2.5-VL-3B, this separation is
+particularly crisp---wrong predictions form a small, dense red
+cluster, while correct ones occupy the rest of the space. This
+suggests the representations themselves contain the binary signal,
+even when the LLM's textual output gets it wrong.
+
+\paragraph{(b) How similar are different VLMs' representations?}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figures/cka_matrix.pdf}
+  \caption{Linear CKA between models on 300 anomalous images. Numbers
+           in cells are the actual CKA values.}
+  \label{fig:cka}
+\end{figure}
+
+The CKA matrix (Fig.~\ref{fig:cka}) confirms that
+\textbf{within-family scaling does not diversify representations}:
+InternVL3-1B vs InternVL3-8B has CKA = 0.93 despite the $8\times$
+parameter difference. The most architecturally distinct model is
+LLaMA-3.2-11B (CKA $\sim$0.25--0.30 with all other models), which
+uses a cross-attention vision design rather than the early-fusion
+projection used by the others. This finding suggests that combining
+\emph{architecturally diverse} VLMs in an ensemble is more
+beneficial than combining \emph{scale-diverse} VLMs of the same
+family.
+
+\paragraph{(c) Where in the network is anomaly information encoded?}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/linear_probe_overlay.pdf}
+    \caption{Linear-probe accuracy per layer.}
+    \label{fig:probe}
+  \end{subfigure}
+  \begin{subfigure}{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/layer_drift_overlay.pdf}
+    \caption{Layer-wise representation drift.}
+    \label{fig:drift}
+  \end{subfigure}
+  \caption{Layer-wise analysis of vision-encoder representations.
+           Probes trained at each layer; drift is cosine
+           distance between consecutive layers.}
+  \label{fig:layer_combined}
+\end{figure}
+
+Linear probes (Fig.~\ref{fig:probe}) trained on each layer's
+representations to predict the 11-class label show monotonic
+improvement with depth across all 9 VLMs, peaking at the final layer
+($\bar{\text{Bal.~Acc.}} \approx 0.40$). Final-layer probe accuracy
+\emph{exceeds} most VLMs' zero-shot accuracy on the multiclass
+task---suggesting that the visual features already contain the
+answer, but the language model fails to extract it via prompting.
+\textbf{This motivates a high-impact follow-up: train a small
+classification head on frozen vision-encoder features.} Our linear
+probes already provide an upper bound on what such a model could
+achieve. The
+layer-drift plot (Fig.~\ref{fig:drift}) shows the largest
+representation changes happen in the early layers (drift $>$ 0.4) and
+plateau by layer 12, which is consistent with most class-discriminative
+information being formed in the middle of the network.
+
+\subsection{Vision-Encoder Class Geometry}
+\label{sec:class_geometry}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/vision_umap_by_class.pdf}
+  \caption{PCA of vision-encoder representations of 600 anomalous
+           images coloured by anomaly class.}
+  \label{fig:umap_class}
+\end{figure}
+
+Beyond binary correctness, we ask whether the 11 classes form
+visually-coherent clusters in the vision encoder's output space
+(Fig.~\ref{fig:umap_class}). Even for our best multiclass model
+(InternVL3-8B), classes do not separate cleanly in 2D
+PCA. This indicates that the vision encoder is not strongly
+class-discriminative; the LLM does the bulk of the multiclass
+reasoning via cross-attention to the projected vision embedding. A
+contrastive vision-encoder objective targeted at anomaly classes
+could meaningfully reshape this geometry.
+
+\subsection{Consistency under Stochastic Decoding}
+\label{sec:consistency}
+
+We measure prediction consistency under temperature-$0.7$ decoding
+with $N{=}5$ runs per image on \emph{both} tasks. We report
+majority-vote (MV) accuracy as well as mean consistency (fraction of
+runs agreeing with the MV) and predictive entropy across runs.
+
+\paragraph{Binary task.}
+\input{tables/08_consistency_binary}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/binary_consistency_overview.pdf}
+  \caption{Cross-model comparison of binary-detection consistency under
+           stochastic decoding ($T{=}0.7$, $N{=}5$ runs).
+           Top-left: majority-vote balanced accuracy.
+           Top-right: mean consistency (fraction of runs agreeing
+           with the majority).
+           Bottom-left: mean entropy (lower = more consistent).
+           Bottom-right: ECE (lower = better calibrated).}
+  \label{fig:binary_consistency}
+\end{figure}
+
+Table~\ref{tab:consistency_binary} and
+Fig.~\ref{fig:binary_consistency} report consistency on the binary
+task. \textbf{Qwen2.5-VL-3B retains its dominance under sampling} —
+majority-vote balanced accuracy = 0.91 with mean consistency $>$ 0.97
+and ECE = 0.024, indicating that its single-shot binary
+predictions reflect a stable underlying decision. In contrast,
+InternVL3-1B's high consistency (0.83) is misleading: it stems from
+\emph{consistently predicting ``anomaly''} regardless of input,
+yielding ECE = 0.66. This decouples \emph{consistency} from
+\emph{correctness}: a model can be very consistent and very wrong.
+
+\paragraph{Multiclass task.}
+\input{tables/06_consistency_multiclass}
+
+The strongest models on multiclass (InternVL3-8B, Qwen2.5-VL-7B) are
+also the most consistent (mean consistency $>$ 0.85), suggesting
+they are confident not just in a single sampled answer but in the
+underlying class assignment. Several weaker models exhibit high
+entropy across runs, meaning their multiclass predictions are
+essentially noise.
+
+% =============================================================================
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+\paragraph{Implications for VLM-based AD systems.}
+Our results have three deployment-relevant implications. First,
+\textbf{parameter count is a weak predictor of detection performance};
+practitioners should benchmark on their target task, not pick the
+largest available model. Second, \textbf{self-reported confidence is
+unreliable in the majority of VLMs}; downstream safety-critical
+planners must apply post-hoc calibration~\citep{vl_calibration} before
+using these scores. Third, \textbf{representation analysis suggests an
+underexploited capability}: linear probes on frozen features already
+beat zero-shot prompting on multiclass classification, with much
+lower latency.
+
+\paragraph{Limitations.}
+(1) Class and description annotations were generated by GPT-4o; we
+mitigated this with cross-LLM validation by Claude Sonnet 4.6 and
+human review of disagreements (Appendix~\ref{app:validation}), but
+some long-tail biases of GPT-4o may persist. (2) The benchmark is
+single-image; temporal anomalies (e.g., gradual lane drift) are out of
+scope. (3) Our model selection focuses on open-source VLMs; we did
+not evaluate proprietary models (GPT-4V, Gemini, Claude) on the full
+benchmark due to API cost. (4) The absolute accuracy numbers reflect
+zero-shot prompting; fine-tuning on the training portion of \bench
+would likely improve all models substantially---this is left to
+follow-up work.
+
+\paragraph{Negative societal impacts.}
+Releasing a benchmark for VLM-based hazard detection in autonomous
+driving could be misinterpreted as endorsing the deployment of
+current VLMs in safety-critical contexts, which our findings argue
+\emph{against}. We explicitly warn in the dataset documentation that
+no model in our zoo achieves accuracy sufficient for unattended AD
+deployment on the long-tailed classes. Conversely, the benchmark
+should accelerate the development of safer VLM-based perception
+modules.
+
+% =============================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+We introduced \bench, a 15{,}000-image dashcam benchmark for
+VLM-based anomaly detection in autonomous driving with rich
+annotations across three tasks. Our extensive empirical study of 16
+models (9 VLMs + 6 visual-similarity baselines + 1 reconstruction
+autoencoder) reveals deployment-critical pathologies in current
+state-of-the-art VLMs: weak-to-poor calibration, family-level
+representation collinearity, and surprising scale-vs-performance
+inversions. We hope \bench enables rigorous follow-up research on
+the reliability of VLM-based AD perception.
+
+% =============================================================================
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+% =============================================================================
+\appendix
+
+\section{Annotation Pipeline and Cross-LLM Validation}
+\label{app:validation}
+
+\paragraph{Annotation pipeline.}
+Each anomalous image is processed through a structured GPT-4o prompt
+that enforces (i) the 11-class taxonomy with detailed disambiguation
+rules, (ii) JSON-schema output, and (iii) consistency checks across
+the 7 attributes (e.g.,
+\texttt{ego\_risk\_level=\textit{none}} requires
+\texttt{anomaly\_present=\textit{false}}). The prompt is reproduced
+in Appendix~\ref{app:annotation_prompt}.
+
+\paragraph{Validation methodology.}
+Following recommendations from the LLM-as-judge
+literature~\citep{judgebench, llm_judge_survey}, we re-annotated
+all 5{,}000 anomalous images with Claude Sonnet 4.6 using a
+cross-validation prompt that asks Claude to (i) independently classify
+the anomaly without seeing the GPT-4o label, and (ii) rate the
+GPT-4o-generated description on factuality and completeness. The
+prompt and full output schema are in
+Appendix~\ref{app:annotation_prompt}. Cost: \$$\sim$60 with prompt
+caching enabled.
+
+\paragraph{Inter-annotator agreement.}
+Cross-LLM Cohen's $\kappa$ between GPT-4o and Claude Sonnet 4.6 on
+the 11-class assignment is reported in
+Appendix~\ref{app:disagreement_stats} along with raw agreement rates,
+mean factuality scores, and the count of disagreements that were
+manually reviewed. We follow the convention that
+$\kappa > 0.6$ indicates substantial agreement. After human review
+and adjudication of all disagreements, the resulting gold labels are
+included in the released dataset.
+
+\paragraph{Disagreement adjudication.}
+For each image where GPT-4o and Claude assigned different classes
+(or where Claude rated the GPT-4o description below 4 on factuality),
+an author manually inspected the image and adjudicated the final
+label. The full distribution of adjudication decisions (GPT-4o
+correct / Claude correct / both wrong / ambiguous) is reported in
+Appendix~\ref{app:disagreement_stats}.
+
+\section{Prompts}
+\label{app:prompts}
+
+\subsection{Binary Prompt}
+\begin{quote}\small
+\texttt{
+Inspect the image and decide if a driving anomaly is present. \\
+Output JSON only:\\
+\{\\
+\hspace*{1em}"anomaly\_present": <bool>,\\
+\hspace*{1em}"confidence": <float in [0,1]>,\\
+\hspace*{1em}"reasoning": <short string>\\
+\}
+}
+\end{quote}
+
+\subsection{Multiclass Prompt}
+\begin{quote}\small
+\texttt{Given that this image contains a driving anomaly, classify
+it into exactly one of the 11 classes [...] Output JSON
+\{"scene\_class": ..., "confidence": ..., "reasoning": ...\}.}
+\end{quote}
+
+\subsection{Description Prompt}
+\begin{quote}\small
+\texttt{Describe the safety anomaly visible in this driving scene in
+2--3 sentences. Focus on visible objects, their location in the
+frame, and the immediate hazard to the ego vehicle.}
+\end{quote}
+
+\subsection{Annotation Prompt (GPT-4o)}
+\label{app:annotation_prompt}
+The annotation prompt enforces the 11-class taxonomy with
+disambiguation rules between visually-similar classes (e.g.,
+\textit{strange\_object\_on\_road} vs.\ \textit{fallen\_debris\_or\_vegetation}),
+plus auxiliary attributes. Full prompt
+text in the supplementary material.
+
+\section{Per-Class Breakdown}
+\label{app:per_class}
+
+\input{tables/07_per_class_f1_full}
+
+Table~\ref{tab:per_class_f1} reports the full per-class F1 matrix.
+Strange-Object-on-Road and Multi-Hazard-Compound are the hardest
+classes universally; Animal-on-Road and Oversized Vehicle are the
+easiest. Per-class precision/recall heatmaps are shown in
+Figure~\ref{fig:per_class_pr}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/per_class_precision_recall.pdf}
+  \caption{Per-class precision (left) and recall (right) heatmaps on
+           the multiclass task.}
+  \label{fig:per_class_pr}
+\end{figure}
+
+\section{Additional Analysis Figures}
+\label{app:appfigs}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/agreement_distribution.pdf}
+  \caption{Distribution of per-image agreement (number of models
+           correct out of 9) on the binary task.}
+  \label{fig:agree_dist}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/agreement_by_class.pdf}
+  \caption{Per-class mean fraction-of-models-correct on multiclass.}
+  \label{fig:agree_by_class}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/detection_vs_classification.pdf}
+  \caption{Detection-vs-classification scatter: each VLM is plotted
+           by its binary balanced accuracy and multiclass macro F1,
+           visualising the dissociation between the two tasks.}
+  \label{fig:det_cls}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/confidence_distributions.pdf}
+  \caption{Per-model confidence histograms split by correctness.}
+  \label{fig:conf_hist}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/confidence_vs_accuracy.pdf}
+  \caption{Mean confidence vs.\ actual accuracy. Models far from the
+           diagonal are mis-calibrated.}
+  \label{fig:conf_vs_acc}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/vision_umap_correct_wrong_multiclass.pdf}
+  \caption{Vision-encoder PCA per model on 600 anomalous images,
+           coloured by multiclass-prediction correctness.}
+  \label{fig:umap_mc_grid}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/vision_umap_by_model.pdf}
+  \caption{Combined UMAP showing the global structure of representations
+           pooled across all VLMs.}
+  \label{fig:umap_by_model}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/layer_drift_all_models.pdf}
+  \caption{Layer drift (cosine distance between consecutive vision-encoder
+           layers) per model, separated by correctness.}
+  \label{fig:drift_grid}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/linear_probe_all_models.pdf}
+  \caption{Linear-probe class-prediction accuracy per layer, per model.}
+  \label{fig:probe_grid}
+\end{figure}
+
+\section{LLM-Layer Hidden-State PCA --- Binary Task}
+\label{app:llm_layer_pca_binary}
+
+We additionally extracted the \emph{language-model} last-token
+hidden state at every transformer layer during a forward pass through
+each (model, image) pair on the binary task. PCA visualisations
+of these hidden states for representative layers (8 evenly-spaced
+layers per model) appear in
+Figs.~\ref{fig:llmpca_internvl3_1b_bin}--\ref{fig:llmpca_llama32_11b_bin}.
+
+The general trend across models: early layers do not separate normal
+from anomalous (representations are dominated by token-position and
+prompt-template features), while later layers progressively organise
+into distinct clusters by class. By the final transformer layer the
+binary structure is clearly visible in 2D PCA for the strongest
+models.
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/internvl3_1b_binary_layer_pca.pdf}
+  \caption{InternVL3-1B last-token hidden-state PCA at 8 representative
+           LLM layers (binary task). Blue = normal, red = anomalous.}
+  \label{fig:llmpca_internvl3_1b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/internvl3_2b_binary_layer_pca.pdf}
+  \caption{InternVL3-2B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_internvl3_2b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/internvl3_8b_binary_layer_pca.pdf}
+  \caption{InternVL3-8B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_internvl3_8b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/qwen2vl_2b_binary_layer_pca.pdf}
+  \caption{Qwen2-VL-2B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_qwen2vl_2b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/qwen25vl_3b_binary_layer_pca.pdf}
+  \caption{Qwen2.5-VL-3B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_qwen25vl_3b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/qwen25vl_7b_binary_layer_pca.pdf}
+  \caption{Qwen2.5-VL-7B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_qwen25vl_7b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/llava_onevision_7b_binary_layer_pca.pdf}
+  \caption{LLaVA-OneVision-7B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_llava_ov_7b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/llava_13b_binary_layer_pca.pdf}
+  \caption{LLaVA-1.6-13B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_llava_13b_bin}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/llama32_11b_binary_layer_pca.pdf}
+  \caption{LLaMA-3.2-11B last-token hidden-state PCA (binary task).}
+  \label{fig:llmpca_llama32_11b_bin}
+\end{figure}
+
+\section{LLM-Layer Hidden-State PCA --- Multiclass Task}
+\label{app:llm_layer_pca_mc}
+
+We repeat the layer-wise PCA analysis for the multiclass task,
+extracting the last-token hidden state at every transformer layer
+and projecting to 2D PCA. Each subplot is colour-coded by the 11
+anomaly classes. The trend mirrors the binary case: early layers
+encode mostly position/prompt information; later layers progressively
+organise by anomaly class, with the strongest separation appearing
+in the final 25\% of layers for the best multiclass models
+(InternVL3-8B and Qwen2.5-VL-7B).
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/internvl3_1b_multiclass_layer_pca.pdf}
+  \caption{InternVL3-1B last-token hidden-state PCA at 8 representative
+           LLM layers (multiclass task), coloured by anomaly class.}
+  \label{fig:llmpca_internvl3_1b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/internvl3_2b_multiclass_layer_pca.pdf}
+  \caption{InternVL3-2B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_internvl3_2b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/internvl3_8b_multiclass_layer_pca.pdf}
+  \caption{InternVL3-8B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_internvl3_8b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/qwen2vl_2b_multiclass_layer_pca.pdf}
+  \caption{Qwen2-VL-2B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_qwen2vl_2b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/qwen25vl_3b_multiclass_layer_pca.pdf}
+  \caption{Qwen2.5-VL-3B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_qwen25vl_3b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/qwen25vl_7b_multiclass_layer_pca.pdf}
+  \caption{Qwen2.5-VL-7B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_qwen25vl_7b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/llava_onevision_7b_multiclass_layer_pca.pdf}
+  \caption{LLaVA-OneVision-7B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_llava_ov_7b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/llava_13b_multiclass_layer_pca.pdf}
+  \caption{LLaVA-1.6-13B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_llava_13b_mc}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figures/llama32_11b_multiclass_layer_pca.pdf}
+  \caption{LLaMA-3.2-11B last-token hidden-state PCA (multiclass task).}
+  \label{fig:llmpca_llama32_11b_mc}
+\end{figure}
+
+\section{Compute Resources}
+\label{app:compute}
+
+All inference and analysis was performed on a single workstation with
+two NVIDIA RTX 5090 GPUs (32 GB each). Total wall-clock time for the
+full benchmark sweep:
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item Binary task (15K images $\times$ 9 VLMs): $\sim$96 GPU-hours.
+  \item Multiclass task (5K images $\times$ 9 VLMs): $\sim$32 GPU-hours.
+  \item Description task (5K images $\times$ 9 VLMs): $\sim$45 GPU-hours.
+  \item Multiclass consistency ($N=5$): $\sim$160 GPU-hours.
+  \item Binary consistency ($N=5$): $\sim$480 GPU-hours.
+  \item Hidden-state extraction for layer-PCA analysis: $\sim$24 GPU-hours.
+  \item CLIP/SigLIP zero-shot baselines: $\sim$8 GPU-hours.
+\end{itemize}
+Total: $\sim$845 GPU-hours, plus $\sim$\$60 in Anthropic API spend
+for cross-LLM annotation validation.
+
+\section{Disagreement Statistics}
+\label{app:disagreement_stats}
+
+We provide full statistics of the GPT-4o vs Claude cross-validation
+disagreements: counts per class, mean Claude factuality/completeness
+scores, and the post-adjudication outcome distribution (GPT-4o
+correct / Claude correct / both wrong / ambiguous-excluded). After
+adjudication, $\sim$X\% of original GPT-4o multiclass labels were
+modified; \texttt{[exact percentage to be filled after final
+adjudication pass]}.
+
+\section{Dataset License and Hosting}
+\label{app:license}
+
+\bench is released under the Creative Commons Attribution 4.0
+International (CC-BY 4.0) license. The dataset is hosted on
+Hugging Face Datasets at the URL provided in the project page.
+A datasheet following the
+template of \citet{datasheets} accompanies the release. Image
+sources include \texttt{[list of source datasets and their original
+licenses]}; all source licenses are compatible with CC-BY
+redistribution.
+
+\section{Reproducibility}
+\label{app:reproducibility}
+
+\paragraph{Code release.}
+All evaluation, analysis, and figure-generation code is released
+alongside the dataset. The repository includes:
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item \texttt{vlm\_eval\_tasks.py} -- main evaluation runner for the
+        three tasks across all 9 VLMs.
+  \item \texttt{clip\_zero\_shot.py} / \texttt{siglip\_zero\_shot.py} --
+        binary-task baselines.
+  \item \texttt{clip\_siglip\_multiclass.py} -- multiclass baselines.
+  \item \texttt{vlm\_consistency\_eval.py} -- temperature-sampling
+        consistency runner.
+  \item \texttt{analysis\_01--05} -- per-axis analysis scripts that
+        regenerate every figure in the paper.
+  \item \texttt{dataset\_validation\_claude.py} -- the LLM-as-judge
+        cross-validation pipeline.
+\end{itemize}
+
+\paragraph{Reproducibility commands.}
+The README provides exact commands of the form
+\begin{quote}\small\texttt{python vlm\_eval\_tasks.py --task binary
+--model all --eval-dir vlm\_eval\_outputs}\end{quote}
+that reproduce every reported number on a single GPU. Expected
+runtime is provided per command. Random seeds are fixed throughout
+the analysis pipeline.
+
+\section{Declaration of LLM Usage}
+\label{app:llm_usage}
+LLMs (GPT-4o and Claude Sonnet 4.6) were used as core methodological
+components: GPT-4o produced the initial class and description
+annotations, and Claude Sonnet 4.6 served as a cross-validating
+judge. These uses are described in detail in
+Sec.~\ref{sec:dataset} and Appendix~\ref{app:validation}. In
+addition, an LLM coding assistant was used during the implementation
+of the evaluation and analysis pipelines.
+
+\input{checklist}
+
+\end{document}

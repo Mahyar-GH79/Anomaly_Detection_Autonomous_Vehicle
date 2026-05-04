@@ -1,0 +1,102 @@
+# ============================================================================
+# Python
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ============================================================================
+# Environments
+# ============================================================================
+env/
+venv/
+.venv/
+ENV/
+
+# ============================================================================
+# Editor / OS
+# ============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.claude/
+
+# ============================================================================
+# Logs
+# ============================================================================
+logs/
+*.log
+
+# ============================================================================
+# Hugging Face / model caches
+# ============================================================================
+cache/
+.cache/
+huggingface_cache/
+~/.cache/huggingface/
+
+# ============================================================================
+# Dataset (large; hosted separately on Hugging Face Datasets)
+# ============================================================================
+Data/images/
+Data/*.tar
+Data/*.zip
+Anomalous_organized/
+Normal_organized/
+Dataset_Curation/
+autoencoder_train/
+ground_truth_annotations.json
+normal_gt.json
+
+# ============================================================================
+# Evaluation outputs (regenerable; large — ~135K representation .npz files)
+# ============================================================================
+vlm_eval_outputs/
+Baselines/Outputs/
+Baselines/.Outputs/
+Baselines/autoencoder_output/
+
+# ============================================================================
+# Generated paper assets (regenerable from scripts in tools/)
+# ============================================================================
+PAPER_PLOTS/
+paper_assets/figures/*.pdf
+paper_assets/figures/*.png
+paper_assets/tables/*.tex
+!paper_assets/figures/.gitkeep
+!paper_assets/tables/.gitkeep
+
+# ============================================================================
+# LaTeX build artefacts
+# ============================================================================
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.pdf
+
+# ============================================================================
+# API keys / secrets
+# ============================================================================
+.env
+.env.local
+*.key
+secrets/
+credentials.json
