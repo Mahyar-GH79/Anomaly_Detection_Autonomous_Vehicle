@@ -85,14 +85,4 @@ on AV anomaly understanding. Authors explicitly **do not** endorse the
 deployment of any model evaluated in the paper for unattended autonomous
 driving — see Section 8 of the paper for a discussion of safety concerns.
 
-## Citation
 
-```bibtex
-@inproceedings{dasha15k_2026,
-  title     = {Benchmarking Vision-Language Models for Anomaly Detection
-               in Autonomous Driving},
-  author    = {Anonymous},
-  booktitle = {NeurIPS Datasets and Benchmarks Track},
-  year      = {2026},
-}
-```
